@@ -48,10 +48,7 @@ public class Controller implements Initializable {
                 basPane.setDisable(true);
             }else
                 gamestart();
-
         } catch (Exception e){
-
-
             System.out.println(e);
         }
     }
@@ -68,7 +65,7 @@ public class Controller implements Initializable {
     @FXML
     private void gamestart(){
         basPane.setDisable(true);
-
+        Main.jatek();
 
     }
 
