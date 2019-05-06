@@ -31,6 +31,8 @@ public class Main extends Application {
     private static int linesNo;
 
     private static Form object;
+    private static Form nextObj = Controller.makeRect();
+
 
     static {
         linesNo = 0;
@@ -65,7 +67,10 @@ public class Main extends Application {
         level.setFill(Color.GREEN);
         group.getChildren().addAll(scoretext, line, level);
 
-
+        Form a = nextObj;
+        group.getChildren().addAll(a.a, a.b, a.c, a.d);
+        object = a;
+        nextObj = Controller.makeRect();
 
         uj.setScene(scene);
         uj.setTitle("T E T R I S");

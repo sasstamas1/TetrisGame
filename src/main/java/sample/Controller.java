@@ -89,7 +89,7 @@ public class Controller implements Initializable {
     }
 
 
-    public static Form makeReact(){
+    public static Form makeRect(){
         int block = (int) (Math.random() * 70);
         String name;
 
