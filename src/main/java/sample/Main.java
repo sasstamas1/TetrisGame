@@ -95,10 +95,15 @@ public class Main extends Application {
                     case LEFT:
                         Controller.MoveLeft(form);
                         break;
+                    case DOWN:
+                        Controller.MoveDown(form);
+                        break;
                 }
             }
         });
     }
+
+
 
     public static void main(String[] args) {
 
