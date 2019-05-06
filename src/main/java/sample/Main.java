@@ -4,13 +4,16 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.util.Arrays;
+
 
 public class Main extends Application {
 
@@ -26,6 +29,8 @@ public class Main extends Application {
     public static int score = 0;
     private static int top = 0;
     private static int linesNo;
+
+    private static Form object;
 
     static {
         linesNo = 0;
@@ -49,16 +54,18 @@ public class Main extends Application {
         }
 
         Line line = new Line(XMAX, 0, XMAX, YMAX);
-        Text scoretext = new Text("Score: ");
+        Text scoretext = new Text("Pontszám: ");
         scoretext.setStyle("-fx-font: 20 arial;");
         scoretext.setY(50);
         scoretext.setX(XMAX + 5);
-        Text level = new Text("Lines: ");
+        Text level = new Text("Sorok: ");
         level.setStyle("-fx-font: 20 arial;");
         level.setY(100);
         level.setX(XMAX + 5);
         level.setFill(Color.GREEN);
         group.getChildren().addAll(scoretext, line, level);
+
+
 
         uj.setScene(scene);
         uj.setTitle("T E T R I S");

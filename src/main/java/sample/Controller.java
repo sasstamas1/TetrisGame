@@ -11,6 +11,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 
+import static sample.Main.SIZE;
+import static sample.Main.XMAX;
+
 public class Controller implements Initializable {
 
     String felhasznalo = "";
@@ -84,6 +87,78 @@ public class Controller implements Initializable {
         rangsor.setDisable(true);
         rangsor.setVisible(false);
     }
+
+
+    public static Form makeReact(){
+        int block = (int) (Math.random() * 70);
+        String name;
+
+        Rectangle a = new Rectangle(SIZE-1,SIZE-1),
+                  b = new Rectangle(SIZE-1,SIZE-1),
+                  c = new Rectangle(SIZE-1,SIZE-1),
+                  d = new Rectangle(SIZE-1,SIZE-1);
+
+
+        if (block < 10) {
+            a.setX(XMAX / 2 - SIZE);
+            b.setX(XMAX / 2 - SIZE);
+            b.setY(SIZE);
+            c.setX(XMAX / 2);
+            c.setY(SIZE);
+            d.setX(XMAX / 2 + SIZE);
+            d.setY(SIZE);
+            name = "j";
+        } else if (block < 20) {
+            a.setX(XMAX / 2 + SIZE);
+            b.setX(XMAX / 2 - SIZE);
+            b.setY(SIZE);
+            c.setX(XMAX / 2);
+            c.setY(SIZE);
+            d.setX(XMAX / 2 + SIZE);
+            d.setY(SIZE);
+            name = "l";
+        } else if (block < 30) {
+            a.setX(XMAX / 2 - SIZE);
+            b.setX(XMAX / 2);
+            c.setX(XMAX / 2 - SIZE);
+            c.setY(SIZE);
+            d.setX(XMAX / 2);
+            d.setY(SIZE);
+            name = "o";
+        } else if (block < 40) {
+            a.setX(XMAX / 2 + SIZE);
+            b.setX(XMAX / 2);
+            c.setX(XMAX / 2);
+            c.setY(SIZE);
+            d.setX(XMAX / 2 - SIZE);
+            d.setY(SIZE);
+            name = "s";
+        } else if (block < 50) {
+            a.setX(XMAX / 2 - SIZE);
+            b.setX(XMAX / 2);
+            c.setX(XMAX / 2);
+            c.setY(SIZE);
+            d.setX(XMAX / 2 + SIZE);
+            name = "t";
+        } else if (block < 60) {
+            a.setX(XMAX / 2 + SIZE);
+            b.setX(XMAX / 2);
+            c.setX(XMAX / 2 + SIZE);
+            c.setY(SIZE);
+            d.setX(XMAX / 2 + SIZE + SIZE);
+            d.setY(SIZE);
+            name = "z";
+        } else {
+            a.setX(XMAX / 2 - SIZE - SIZE);
+            b.setX(XMAX / 2 - SIZE);
+            c.setX(XMAX / 2);
+            d.setX(XMAX / 2 + SIZE);
+            name = "i";
+        }
+        return new Form(a, b, c, d, name);
+
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
