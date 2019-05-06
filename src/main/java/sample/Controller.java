@@ -11,8 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 
-import static sample.Main.SIZE;
-import static sample.Main.XMAX;
+
 
 public class Controller implements Initializable {
 
@@ -27,14 +26,13 @@ public class Controller implements Initializable {
     @FXML
     private Label alert;
     @FXML
-    private Pane background;
-    @FXML
     private Pane rangsor;
-    @FXML
-    private Pane game;
-    @FXML
-    public Rectangle recta,rectb,rectc,rectd;
 
+    public static final int MOVE = Main.MOVE;
+    public static final int SIZE = Main.SIZE;
+    public static int XMAX = Main.XMAX;
+    public static int YMAX = Main.YMAX;
+    public static int[][] MESH = Main.MESH;
 
 
 
@@ -158,6 +156,39 @@ public class Controller implements Initializable {
         return new Form(a, b, c, d, name);
 
     }
+
+    public static void MoveRight(Form form) {
+        if (form.a.getX() + MOVE <= XMAX - SIZE && form.b.getX() + MOVE <= XMAX - SIZE
+                && form.c.getX() + MOVE <= XMAX - SIZE && form.d.getX() + MOVE <= XMAX - SIZE) {
+            int movea = MESH[((int) form.a.getX() / SIZE) + 1][((int) form.a.getY() / SIZE)];
+            int moveb = MESH[((int) form.b.getX() / SIZE) + 1][((int) form.b.getY() / SIZE)];
+            int movec = MESH[((int) form.c.getX() / SIZE) + 1][((int) form.c.getY() / SIZE)];
+            int moved = MESH[((int) form.d.getX() / SIZE) + 1][((int) form.d.getY() / SIZE)];
+            if (movea == 0 && movea == moveb && moveb == movec && movec == moved) {
+                form.a.setX(form.a.getX() + MOVE);
+                form.b.setX(form.b.getX() + MOVE);
+                form.c.setX(form.c.getX() + MOVE);
+                form.d.setX(form.d.getX() + MOVE);
+            }
+        }
+    }
+
+    public static void MoveLeft(Form form) {
+        if (form.a.getX() - MOVE >= 0 && form.b.getX() - MOVE >= 0 && form.c.getX() - MOVE >= 0
+                && form.d.getX() - MOVE >= 0) {
+            int movea = MESH[((int) form.a.getX() / SIZE) - 1][((int) form.a.getY() / SIZE)];
+            int moveb = MESH[((int) form.b.getX() / SIZE) - 1][((int) form.b.getY() / SIZE)];
+            int movec = MESH[((int) form.c.getX() / SIZE) - 1][((int) form.c.getY() / SIZE)];
+            int moved = MESH[((int) form.d.getX() / SIZE) - 1][((int) form.d.getY() / SIZE)];
+            if (movea == 0 && movea == moveb && moveb == movec && movec == moved) {
+                form.a.setX(form.a.getX() - MOVE);
+                form.b.setX(form.b.getX() - MOVE);
+                form.c.setX(form.c.getX() - MOVE);
+                form.d.setX(form.d.getX() - MOVE);
+            }
+        }
+    }
+
 
 
     @Override

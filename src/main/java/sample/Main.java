@@ -1,10 +1,12 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -69,13 +71,33 @@ public class Main extends Application {
 
         Form a = nextObj;
         group.getChildren().addAll(a.a, a.b, a.c, a.d);
+
         object = a;
+        moveOnKeyPress(a);
         nextObj = Controller.makeRect();
 
         uj.setScene(scene);
         uj.setTitle("T E T R I S");
         uj.show();
 
+    }
+
+
+
+    private static void moveOnKeyPress(Form form) {
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                switch (event.getCode()) {
+                    case RIGHT:
+                        Controller.MoveRight(form);
+                        break;
+                    case LEFT:
+                        Controller.MoveLeft(form);
+                        break;
+                }
+            }
+        });
     }
 
     public static void main(String[] args) {
