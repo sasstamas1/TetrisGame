@@ -84,8 +84,8 @@ public class Controller implements Initializable {
 
 
     public static Form makeRect(){
-       // int block = (int) (Math.random() * 70);
-        int block = 11;
+        int block = (int) (Math.random() * 70);
+       // int block = 11;
         String name;
 
         Rectangle a = new Rectangle(SIZE-1,SIZE-1),

@@ -184,54 +184,55 @@ public class Main extends Application {
         Rectangle d = form.d;
         switch (form.getName()){
             case "j":
-                if( f==1 && forgat(a,1,-1) && forgat(c,-1,-1) && forgat(d,-2,-2)){
-                    Jobbra(a);
-                    Le(a);
-                    Balra(c);
-                    Le(c);
-                    Balra(d);
-                    Balra(d);
-                    Le(d);
-                    Le(d);
-                    form.changeForm();
-                    break;
+            if (f == 1 && forgat(a, 1, -1) && forgat(c, -1, -1) && forgat(d, -2, -2)) {
+                Jobbra(form.a);
+                Le(form.a);
+                Le(form.c);
+                Balra(form.c);
+                Le(form.d);
+                Le(form.d);
+                Balra(form.d);
+                Balra(form.d);
+                form.changeForm();
+                break;
             }
-                if (f == 2 && forgat(a, -1, -1) && forgat(c, -1, 1) && forgat(d, -2, 2)) {
-                    Le(form.a);
-                    Balra(form.a);
-                    Balra(form.c);
-                    Fel(form.c);
-                    Balra(form.d);
-                    Balra(form.d);
-                    Fel(form.d);
-                    Fel(form.d);
-                    form.changeForm();
-                    break;
-                }
-                if (f == 3 && forgat(a, -1, 1) && forgat(c, 1, 1) && forgat(d, 2, 2)) {
-                    Balra(form.a);
-                    Fel(form.a);
-                    Fel(form.c);
-                    Jobbra(form.c);
-                    Fel(form.d);
-                    Fel(form.d);
-                    Jobbra(form.d);
-                    Jobbra(form.d);
-                    form.changeForm();
-                    break;
-                }
-                if (f == 4 && forgat(a, 1, 1) && forgat(c, 1, -1) && forgat(d, 2, -2)) {
-                    Fel(form.a);
-                    Jobbra(form.a);
-                    Jobbra(form.c);
-                    Le(form.c);
-                    Jobbra(form.d);
-                    Jobbra(form.d);
-                    Le(form.d);
-                    Le(form.d);
-                    form.changeForm();
-                    break;
-                }
+            if (f == 2 && forgat(a, -1, -1) && forgat(c, -1, 1) && forgat(d, -2, 2)) {
+                Le(form.a);
+                Balra(form.a);
+                Balra(form.c);
+                Fel(form.c);
+                Balra(form.d);
+                Balra(form.d);
+                Fel(form.d);
+                Fel(form.d);
+                form.changeForm();
+                break;
+            }
+            if (f == 3 && forgat(a, -1, 1) && forgat(c, 1, 1) && forgat(d, 2, 2)) {
+                Balra(form.a);
+                Fel(form.a);
+                Fel(form.c);
+                Jobbra(form.c);
+                Fel(form.d);
+                Fel(form.d);
+                Jobbra(form.d);
+                Jobbra(form.d);
+                form.changeForm();
+                break;
+            }
+            if (f == 4 && forgat(a, 1, 1) && forgat(c, 1, -1) && forgat(d, 2, -2)) {
+                Fel(form.a);
+                Jobbra(form.a);
+                Jobbra(form.c);
+                Le(form.c);
+                Jobbra(form.d);
+                Jobbra(form.d);
+                Le(form.d);
+                Le(form.d);
+                form.changeForm();
+                break;
+            }
+            break;
             case "l":
                 if (f == 1 && forgat(a, 1, -1) && forgat(c, 1, 1) && forgat(b, 2, 2)) {
                     Jobbra(form.a);
@@ -281,6 +282,7 @@ public class Main extends Application {
                     form.changeForm();
                     break;
                 }
+                break;
             case "s":
                 if (f == 1 && forgat(a, -1, -1) && forgat(c, -1, 1) && forgat(d, 0, 2)) {
                     Le(form.a);
