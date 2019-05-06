@@ -10,12 +10,14 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 
 public class Main extends Application {
@@ -30,6 +32,7 @@ public class Main extends Application {
     private static Pane group = new Pane();
     private static Scene scene = new Scene(group, XMAX + 150, YMAX);
     public static int score = 0;
+    public static String felhasznalo="";
     private static int top = 0;
     private static int linesNo;
 
@@ -59,16 +62,11 @@ public class Main extends Application {
         }
 
         Line line = new Line(XMAX, 0, XMAX, YMAX);
-        Text scoretext = new Text("Pontszám: ");
+        Text scoretext = new Text("Pont: ");
         scoretext.setStyle("-fx-font: 20 arial;");
         scoretext.setY(50);
         scoretext.setX(XMAX + 5);
-        Text level = new Text("Sorok: ");
-        level.setStyle("-fx-font: 20 arial;");
-        level.setY(100);
-        level.setX(XMAX + 5);
-        level.setFill(Color.GREEN);
-        group.getChildren().addAll(scoretext, line, level);
+        group.getChildren().addAll(scoretext, line);
 
         Form a = nextObj;
         group.getChildren().addAll(a.a, a.b, a.c, a.d);
@@ -95,23 +93,22 @@ public class Main extends Application {
 
                         if (top == 2) {
                             // GAME OVER
-                            Text over = new Text("GAME OVER");
+                            Text over = new Text("JÁTÉK VÉGE!");
                             over.setFill(Color.RED);
-                            over.setStyle("-fx-font: 70 arial;");
-                            over.setY(250);
+                            over.setStyle("-fx-font: 55 Italic;");
+                            over.setY(YMAX/2);
                             over.setX(10);
                             group.getChildren().add(over);
                             game = false;
                         }
                         // Exit
-                        if (top == 15) {
+                        if (top == 5) {
                             System.exit(0);
                         }
 
                         if (game) {
                             MoveDown(object);
-                            scoretext.setText("Score: " + Integer.toString(score));
-                            level.setText("Lines: " + Integer.toString(linesNo));
+                            scoretext.setText("Pont: " + Integer.toString(score));
                         }
                     }
                 });
@@ -136,6 +133,9 @@ public class Main extends Application {
                     case DOWN:
                         MoveDown(form);
                         break;
+                    case UP:
+                        Rotate(form);
+
                 }
             }
         });
@@ -156,6 +156,7 @@ public class Main extends Application {
                 form.c.setY(form.c.getY() + MOVE);
                 form.d.setY(form.d.getY() + MOVE);
             }
+            score++;
         }
         if (form.a.getY() == YMAX - SIZE || form.b.getY() == YMAX - SIZE || form.c.getY() == YMAX - SIZE
                 || form.d.getY() == YMAX - SIZE || moveA(form) || moveB(form) || moveC(form) || moveD(form)) {
@@ -170,8 +171,294 @@ public class Main extends Application {
             object = a;
             group.getChildren().addAll(a.a, a.b, a.c, a.d);
             moveOnKeyPress(a);
+            score++;
         }
     }
+
+
+    private static void Rotate(Form form) {
+        int f = form.form;
+        Rectangle a = form.a;
+        Rectangle b = form.b;
+        Rectangle c = form.c;
+        Rectangle d = form.d;
+        switch (form.getName()){
+            case "j":
+                if( f==1 && forgat(a,1,-1) && forgat(c,-1,-1) && forgat(d,-2,-2)){
+                    Jobbra(a);
+                    Le(a);
+                    Balra(c);
+                    Le(c);
+                    Balra(d);
+                    Balra(d);
+                    Le(d);
+                    Le(d);
+                    form.changeForm();
+                    break;
+            }
+                if (f == 2 && forgat(a, -1, -1) && forgat(c, -1, 1) && forgat(d, -2, 2)) {
+                    Le(form.a);
+                    Balra(form.a);
+                    Balra(form.c);
+                    Fel(form.c);
+                    Balra(form.d);
+                    Balra(form.d);
+                    Fel(form.d);
+                    Fel(form.d);
+                    form.changeForm();
+                    break;
+                }
+                if (f == 3 && forgat(a, -1, 1) && forgat(c, 1, 1) && forgat(d, 2, 2)) {
+                    Balra(form.a);
+                    Fel(form.a);
+                    Fel(form.c);
+                    Jobbra(form.c);
+                    Fel(form.d);
+                    Fel(form.d);
+                    Jobbra(form.d);
+                    Jobbra(form.d);
+                    form.changeForm();
+                    break;
+                }
+                if (f == 4 && forgat(a, 1, 1) && forgat(c, 1, -1) && forgat(d, 2, -2)) {
+                    Fel(form.a);
+                    Jobbra(form.a);
+                    Jobbra(form.c);
+                    Le(form.c);
+                    Jobbra(form.d);
+                    Jobbra(form.d);
+                    Le(form.d);
+                    Le(form.d);
+                    form.changeForm();
+                    break;
+                }
+            case "l":
+                if (f == 1 && forgat(a, 1, -1) && forgat(c, 1, 1) && forgat(b, 2, 2)) {
+                    Jobbra(form.a);
+                    Le(form.a);
+                    Fel(form.c);
+                    Jobbra(form.c);
+                    Fel(form.b);
+                    Fel(form.b);
+                    Jobbra(form.b);
+                    Jobbra(form.b);
+                    form.changeForm();
+                    break;
+                }
+                if (f == 2 && forgat(a, -1, -1) && forgat(b, 2, -2) && forgat(c, 1, -1)) {
+                    Le(form.a);
+                    Balra(form.a);
+                    Jobbra(form.b);
+                    Jobbra(form.b);
+                    Le(form.b);
+                    Le(form.b);
+                    Jobbra(form.c);
+                    Le(form.c);
+                    form.changeForm();
+                    break;
+                }
+                if (f == 3 && forgat(a, -1, 1) && forgat(c, -1, -1) && forgat(b, -2, -2)) {
+                    Balra(form.a);
+                    Fel(form.a);
+                    Le(form.c);
+                    Balra(form.c);
+                    Le(form.b);
+                    Le(form.b);
+                    Balra(form.b);
+                    Balra(form.b);
+                    form.changeForm();
+                    break;
+                }
+                if (f == 4 && forgat(a, 1, 1) && forgat(b, -2, 2) && forgat(c, -1, 1)) {
+                    Fel(form.a);
+                    Jobbra(form.a);
+                    Balra(form.b);
+                    Balra(form.b);
+                    Fel(form.b);
+                    Fel(form.b);
+                    Balra(form.c);
+                    Fel(form.c);
+                    form.changeForm();
+                    break;
+                }
+            case "s":
+                if (f == 1 && forgat(a, -1, -1) && forgat(c, -1, 1) && forgat(d, 0, 2)) {
+                    Le(form.a);
+                    Balra(form.a);
+                    Balra(form.c);
+                    Fel(form.c);
+                    Fel(form.d);
+                    Fel(form.d);
+                    form.changeForm();
+                    break;
+                }
+                if (f == 2 && forgat(a, 1, 1) && forgat(c, 1, -1) && forgat(d, 0, -2)) {
+                    Fel(form.a);
+                    Jobbra(form.a);
+                    Jobbra(form.c);
+                    Le(form.c);
+                    Le(form.d);
+                    Le(form.d);
+                    form.changeForm();
+                    break;
+                }
+                if (f == 3 && forgat(a, -1, -1) && forgat(c, -1, 1) && forgat(d, 0, 2)) {
+                    Le(form.a);
+                    Balra(form.a);
+                    Balra(form.c);
+                    Fel(form.c);
+                    Fel(form.d);
+                    Fel(form.d);
+                    form.changeForm();
+                    break;
+                }
+                if (f == 4 && forgat(a, 1, 1) && forgat(c, 1, -1) && forgat(d, 0, -2)) {
+                    Fel(form.a);
+                    Jobbra(form.a);
+                    Jobbra(form.c);
+                    Le(form.c);
+                    Le(form.d);
+                    Le(form.d);
+                    form.changeForm();
+                    break;
+                }
+            case "t":
+                if (f == 1 && forgat(a, 1, 1) && forgat(d, -1, -1) && forgat(c, -1, 1)) {
+                    Fel(form.a);
+                    Jobbra(form.a);
+                    Le(form.d);
+                    Balra(form.d);
+                    Balra(form.c);
+                    Fel(form.c);
+                    form.changeForm();
+                    break;
+                }
+                if (f == 2 && forgat(a, 1, -1) && forgat(d, -1, 1) && forgat(c, 1, 1)) {
+                    Jobbra(form.a);
+                    Le(form.a);
+                    Balra(form.d);
+                    Fel(form.d);
+                    Fel(form.c);
+                    Jobbra(form.c);
+                    form.changeForm();
+                    break;
+                }
+                if (f == 3 && forgat(a, -1, -1) && forgat(d, 1, 1) && forgat(c, 1, -1)) {
+                    Le(form.a);
+                    Balra(form.a);
+                    Fel(form.d);
+                    Jobbra(form.d);
+                    Jobbra(form.c);
+                    Le(form.c);
+                    form.changeForm();
+                    break;
+                }
+                if (f == 4 && forgat(a, -1, 1) && forgat(d, 1, -1) && forgat(c, -1, -1)) {
+                    Balra(form.a);
+                    Fel(form.a);
+                    Jobbra(form.d);
+                    Le(form.d);
+                    Le(form.c);
+                    Balra(form.c);
+                    form.changeForm();
+                    break;
+                }
+            case "z":
+                if (f == 1 && forgat(b, 1, 1) && forgat(c, -1, 1) && forgat(d, -2, 0)) {
+                    Fel(form.b);
+                    Jobbra(form.b);
+                    Balra(form.c);
+                    Fel(form.c);
+                    Balra(form.d);
+                    Balra(form.d);
+                    form.changeForm();
+                    break;
+                }
+                if (f == 2 && forgat(b, -1, -1) && forgat(c, 1, -1) && forgat(d, 2, 0)) {
+                    Le(form.b);
+                    Balra(form.b);
+                    Jobbra(form.c);
+                    Le(form.c);
+                    Jobbra(form.d);
+                    Jobbra(form.d);
+                    form.changeForm();
+                    break;
+                }
+                if (f == 3 && forgat(b, 1, 1) && forgat(c, -1, 1) && forgat(d, -2, 0)) {
+                    Fel(form.b);
+                    Jobbra(form.b);
+                    Balra(form.c);
+                    Fel(form.c);
+                    Balra(form.d);
+                    Balra(form.d);
+                    form.changeForm();
+                    break;
+                }
+                if (f == 4 && forgat(b, -1, -1) && forgat(c, 1, -1) && forgat(d, 2, 0)) {
+                    Le(form.b);
+                    Balra(form.b);
+                    Jobbra(form.c);
+                    Le(form.c);
+                    Jobbra(form.d);
+                    Jobbra(form.d);
+                    form.changeForm();
+                    break;
+                }
+            case "i":
+                if (f == 1 && forgat(a, 2, 2) && forgat(b, 1, 1) && forgat(d, -1, -1)) {
+                    Fel(form.a);
+                    Fel(form.a);
+                    Jobbra(form.a);
+                    Jobbra(form.a);
+                    Fel(form.b);
+                    Jobbra(form.b);
+                    Le(form.d);
+                    Balra(form.d);
+                    form.changeForm();
+                    break;
+                }
+                if (f == 2 && forgat(a, -2, -2) && forgat(b, -1, -1) && forgat(d, 1, 1)) {
+                    Le(form.a);
+                    Le(form.a);
+                    Balra(form.a);
+                    Balra(form.a);
+                    Le(form.b);
+                    Balra(form.b);
+                    Fel(form.d);
+                    Jobbra(form.d);
+                    form.changeForm();
+                    break;
+                }
+                if (f == 3 && forgat(a, 2, 2) && forgat(b, 1, 1) && forgat(d, -1, -1)) {
+                    Fel(form.a);
+                    Fel(form.a);
+                    Jobbra(form.a);
+                    Jobbra(form.a);
+                    Fel(form.b);
+                    Jobbra(form.b);
+                    Le(form.d);
+                    Balra(form.d);
+                    form.changeForm();
+                    break;
+                }
+                if (f == 4 && forgat(a, -2, -2) && forgat(b, -1, -1) && forgat(d, 1, 1)) {
+                    Le(form.a);
+                    Le(form.a);
+                    Balra(form.a);
+                    Balra(form.a);
+                    Le(form.b);
+                    Balra(form.b);
+                    Fel(form.d);
+                    Jobbra(form.d);
+                    form.changeForm();
+                    break;
+                }
+
+        }
+
+    }
+
+
 
 
     private static boolean moveA(Form form) {
@@ -189,6 +476,44 @@ public class Main extends Application {
     private static boolean moveD(Form form) {
         return (MESH[(int) form.d.getX() / SIZE][((int) form.d.getY() / SIZE) + 1] == 1);
     }
+
+
+    private static boolean forgat(Rectangle rect, int x, int y) {
+        boolean xb = false;
+        boolean yb = false;
+        if (x >= 0)
+            xb = rect.getX() + x * MOVE <= XMAX - SIZE;
+        if (x < 0)
+            xb = rect.getX() + x * MOVE >= 0;
+        if (y >= 0)
+            yb = rect.getY() - y * MOVE > 0;
+        if (y < 0)
+            yb = rect.getY() + y * MOVE < YMAX;
+        return xb && yb && MESH[((int) rect.getX() / SIZE) + x][((int) rect.getY() / SIZE) - y] == 0;
+    }
+
+
+    private static void Jobbra(Rectangle rect){
+        if (rect.getX() + MOVE <= XMAX-SIZE)
+            rect.setX(rect.getX() + MOVE);
+    }
+
+    private static void Balra(Rectangle rect){
+        if(rect.getX()-MOVE >= 0)
+            rect.setX(rect.getX()-MOVE);
+
+    }
+
+    private static void Le(Rectangle rect){
+        if (rect.getY() + MOVE < YMAX)
+            rect.setY(rect.getY() + MOVE);
+    }
+
+    private static void Fel(Rectangle rect){
+        if(rect.getY()-MOVE > 0)
+            rect.setY(rect.getY()-MOVE);
+    }
+
 
     public static void main(String[] args) {
 

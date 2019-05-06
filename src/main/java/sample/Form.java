@@ -28,25 +28,25 @@ public class Form {
 
         switch (name) {
             case "j":
-                color = Color.SLATEGRAY;
+                color = Color.BLUE;
                 break;
             case "l":
-                color = Color.DARKGOLDENROD;
+                color = Color.GREEN;
                 break;
             case "o":
-                color = Color.INDIANRED;
+                color = Color.GRAY;
                 break;
             case "s":
-                color = Color.FORESTGREEN;
+                color = Color.DARKBLUE;
                 break;
             case "t":
-                color = Color.CADETBLUE;
+                color = Color.BROWN;
                 break;
             case "z":
-                color = Color.HOTPINK;
+                color = Color.GOLD;
                 break;
             case "i":
-                color = Color.SANDYBROWN;
+                color = Color.ORANGE;
                 break;
 
         }

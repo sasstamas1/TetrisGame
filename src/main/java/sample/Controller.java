@@ -15,12 +15,11 @@ import javafx.scene.shape.Rectangle;
 
 public class Controller implements Initializable {
 
-    String felhasznalo = "";
 
     @FXML
     private TextField felh;
     @FXML
-    private Pane basPane;
+    private  Pane basPane;
     @FXML
     private Pane alertPane;
     @FXML
@@ -34,15 +33,13 @@ public class Controller implements Initializable {
     public static int YMAX = Main.YMAX;
     public static int[][] MESH = Main.MESH;
 
-
-
     @FXML
     private void handleButtonAction(ActionEvent event){
         try {
-            felhasznalo=felh.getText();
-            System.out.println(felhasznalo);
+            Main.felhasznalo=felh.getText();
+            System.out.println(Main.felhasznalo);
 
-            if(felhasznalo.isEmpty()){
+            if(Main.felhasznalo.isEmpty()){
                 alertPane.setVisible(true);
                 alert.setText("Nem adtál meg nevet!");
                 basPane.setOpacity(0.3);
@@ -67,7 +64,6 @@ public class Controller implements Initializable {
     private void gamestart(){
         basPane.setDisable(true);
         Main.jatek();
-
     }
 
     @FXML
@@ -88,7 +84,8 @@ public class Controller implements Initializable {
 
 
     public static Form makeRect(){
-        int block = (int) (Math.random() * 70);
+       // int block = (int) (Math.random() * 70);
+        int block = 11;
         String name;
 
         Rectangle a = new Rectangle(SIZE-1,SIZE-1),
