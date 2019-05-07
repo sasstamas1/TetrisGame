@@ -140,11 +140,11 @@ public class Controller implements Initializable {
             b.setX(XMAX / 2);
             c.setX(XMAX / 2 + SIZE);
             c.setY(SIZE);
-            d.setX(XMAX / 2 + SIZE + SIZE);
+            d.setX(XMAX / 2 + 2 * SIZE);
             d.setY(SIZE);
             name = "z";
         } else {
-            a.setX(XMAX / 2 - SIZE - SIZE);
+            a.setX(XMAX / 2 - 2 * SIZE);
             b.setX(XMAX / 2 - SIZE);
             c.setX(XMAX / 2);
             d.setX(XMAX / 2 + SIZE);
