@@ -1,6 +1,7 @@
-package sample;
+package Controller;
 
-//import java.awt.*;
+import Main.Main;
+import Controller.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -78,7 +79,7 @@ public class Controller implements Initializable {
         rangsor.setDisable(true);
         rangsor.setVisible(false);
     }
-    
+
     public static Form makeRect(){
         int block = (int) (Math.random() * 70);
        // int block = 11;

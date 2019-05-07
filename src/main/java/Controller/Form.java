@@ -1,13 +1,13 @@
-package sample;
+package Controller;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Form {
-    Rectangle a;
-    Rectangle b;
-    Rectangle c;
-    Rectangle d;
+    public Rectangle a;
+    public Rectangle b;
+    public Rectangle c;
+    public Rectangle d;
     Color color;
     private String name;
     public int form = 1;

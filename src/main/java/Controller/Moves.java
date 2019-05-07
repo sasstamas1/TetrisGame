@@ -1,4 +1,6 @@
-package sample;
+package Controller;
+
+import Main.*;
 
 public class Moves {
 

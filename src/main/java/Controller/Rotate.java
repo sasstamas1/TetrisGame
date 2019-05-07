@@ -1,7 +1,7 @@
-package sample;
+package Controller;
 
 import javafx.scene.shape.Rectangle;
-
+import Main.*;
 
 public class Rotate {
 

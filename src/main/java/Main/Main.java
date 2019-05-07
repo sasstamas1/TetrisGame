@@ -1,5 +1,6 @@
-package sample;
+package Main;
 
+import Controller.*;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -22,7 +23,6 @@ import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static javafx.application.Platform.exit;
 
 
 public class Main extends Application {
