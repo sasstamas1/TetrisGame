@@ -46,9 +46,10 @@ public class Main extends Application {
     private static int top = 0;
 
     private static Form object;
-    private static Form nextObj = Controller.makeRect();
+    private static Form nextObj = Control.makeRect();
 
     public void start(Stage primaryStage) throws Exception {
+
 
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("FXML/sample.fxml"));
         primaryStage.setTitle("Tetris");
@@ -89,7 +90,7 @@ public class Main extends Application {
 
         object = form;
         moveOnKeyPress(form);
-        nextObj = Controller.makeRect();
+        nextObj = Control.makeRect();
 
         uj.setScene(scene);
         uj.setTitle("T E T R I S");
@@ -150,10 +151,10 @@ public class Main extends Application {
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {
                     case RIGHT:
-                        Moves.MoveRight(form);
+                        Control.MoveRight(form);
                         break;
                     case LEFT:
-                        Moves.MoveLeft(form);
+                        Control.MoveLeft(form);
                         break;
                     case UP:
                         Rotate.Rotate(form);
@@ -188,85 +189,15 @@ public class Main extends Application {
             HALO[(int) form.b.getX() / SIZE][(int) form.b.getY() / SIZE] = 1;
             HALO[(int) form.c.getX() / SIZE][(int) form.c.getY() / SIZE] = 1;
             HALO[(int) form.d.getX() / SIZE][(int) form.d.getY() / SIZE] = 1;
-            DeleteRows(group);
+            Control.DeleteRows(group);
 
             Form a = nextObj;
-            nextObj = Controller.makeRect();
+            nextObj = Control.makeRect();
             object = a;
             group.getChildren().addAll(a.a, a.b, a.c, a.d);
             moveOnKeyPress(a);
             pont++;
         }
-    }
-
-
-
-
-    private static void DeleteRows(Pane pane){
-        ArrayList<Node> rects = new ArrayList<Node>();
-        ArrayList<Integer> lines = new ArrayList<Integer>();
-        ArrayList<Node> newrects = new ArrayList<Node>();
-        int full = 0;
-        //Finding which line is full
-        for(int i = 0; i < HALO[0].length; i++){
-            for(int j = 0; j < HALO.length; j++){
-                if(HALO[j][i] == 1)
-                    full++;
-            }
-            if(full == HALO.length)
-                lines.add(i+lines.size());
-            full = 0;
-        }
-        //Deleting rows if any is full
-        if(lines.size() > 0)
-            do{
-                for(Node node: pane.getChildren()) {
-                    if(node instanceof Rectangle)
-                        rects.add(node);
-                }
-                pont += 100;
-                //Deleting the blocks on the full row
-                for(Node node: rects){
-                    Rectangle a = (Rectangle)node;
-                    if(a.getY() == lines.get(0)*SIZE){
-                        try {
-                            HALO[(int)a.getX()/SIZE][(int)a.getY()/SIZE] = 0;
-                            pane.getChildren().remove(node);
-                        } catch (ArrayIndexOutOfBoundsException e){
-                        }
-
-                    }
-                    else
-                        newrects.add(node);
-                }
-                //Added because it was causing problems when it was inside the iteration above.
-                for(Node node: newrects){
-                    Rectangle a = (Rectangle)node;
-                    if(a.getY() < lines.get(0)*SIZE){
-                        try {
-                            HALO[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 0;
-                            a.setY(a.getY() + SIZE);
-                        }catch (ArrayIndexOutOfBoundsException e){
-
-                        }
-                    }
-                }
-                lines.remove(0);
-                rects.clear();
-                newrects.clear();
-                for(Node node: pane.getChildren()) {
-                    if(node instanceof Rectangle)
-                        rects.add(node);
-                }
-                for(Node node: rects){
-                    Rectangle a = (Rectangle)node;
-                    try {
-                        HALO[(int)a.getX()/SIZE][(int)a.getY()/SIZE] = 1;
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                    }
-                }
-                rects.clear();
-            } while(lines.size() > 0);
     }
 
 

@@ -1,16 +1,23 @@
 package Controller;
 
 import Main.Main;
-import Controller.*;
+
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import Users.Users;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import dao.UsersDao;
+import guice.PersistenceModule;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
 
 public class Controller implements Initializable {
 
@@ -24,6 +31,11 @@ public class Controller implements Initializable {
     private Label alert;
     @FXML
     private Pane rangsor;
+    @FXML
+    private TableView rang;
+
+
+
 
     public static final int MOVE = Main.MOVE;
     public static final int SIZE = Main.SIZE;
@@ -70,6 +82,7 @@ public class Controller implements Initializable {
         basPane.setVisible(false);
         rangsor.setDisable(false);
         rangsor.setVisible(true);
+        Ranglista();
     }
 
     @FXML
@@ -80,77 +93,22 @@ public class Controller implements Initializable {
         rangsor.setVisible(false);
     }
 
-    public static Form makeRect(){
-        int block = (int) (Math.random() * 70);
-       // int block = 11;
-        String name;
 
-        Rectangle a = new Rectangle(SIZE-1,SIZE-1),
-                  b = new Rectangle(SIZE-1,SIZE-1),
-                  c = new Rectangle(SIZE-1,SIZE-1),
-                  d = new Rectangle(SIZE-1,SIZE-1);
+    @FXML
+    private void Ranglista(){
+        Injector injector = Guice.createInjector(new PersistenceModule("jpa-persistence-unit-1"));
+        UsersDao usersDao = injector.getInstance(UsersDao.class);
+        TableColumn id = new TableColumn("id");
+        id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        TableColumn nameColumn = new TableColumn("name");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        TableColumn score = new TableColumn("score");
+        score.setCellValueFactory(new PropertyValueFactory<>("score"));
 
-
-        if (block < 10) {
-            a.setX(XMAX / 2 - SIZE);
-            b.setX(XMAX / 2 - SIZE);
-            b.setY(SIZE);
-            c.setX(XMAX / 2);
-            c.setY(SIZE);
-            d.setX(XMAX / 2 + SIZE);
-            d.setY(SIZE);
-            name = "j";
-        } else if (block < 20) {
-            a.setX(XMAX / 2 + SIZE);
-            b.setX(XMAX / 2 - SIZE);
-            b.setY(SIZE);
-            c.setX(XMAX / 2);
-            c.setY(SIZE);
-            d.setX(XMAX / 2 + SIZE);
-            d.setY(SIZE);
-            name = "l";
-        } else if (block < 30) {
-            a.setX(XMAX / 2 - SIZE);
-            b.setX(XMAX / 2);
-            c.setX(XMAX / 2 - SIZE);
-            c.setY(SIZE);
-            d.setX(XMAX / 2);
-            d.setY(SIZE);
-            name = "o";
-        } else if (block < 40) {
-            a.setX(XMAX / 2 + SIZE);
-            b.setX(XMAX / 2);
-            c.setX(XMAX / 2);
-            c.setY(SIZE);
-            d.setX(XMAX / 2 - SIZE);
-            d.setY(SIZE);
-            name = "s";
-        } else if (block < 50) {
-            a.setX(XMAX / 2 - SIZE);
-            b.setX(XMAX / 2);
-            c.setX(XMAX / 2);
-            c.setY(SIZE);
-            d.setX(XMAX / 2 + SIZE);
-            name = "t";
-        } else if (block < 60) {
-            a.setX(XMAX / 2 + SIZE);
-            b.setX(XMAX / 2);
-            c.setX(XMAX / 2 + SIZE);
-            c.setY(SIZE);
-            d.setX(XMAX / 2 + 2 * SIZE);
-            d.setY(SIZE);
-            name = "z";
-        } else {
-            a.setX(XMAX / 2 - 2 * SIZE);
-            b.setX(XMAX / 2 - SIZE);
-            c.setX(XMAX / 2);
-            d.setX(XMAX / 2 + SIZE);
-            name = "i";
-        }
-        return new Form(a, b, c, d, name);
+        rang.getColumns().addAll(id,nameColumn,score);
+        rang.getItems().addAll(usersDao.getTopTen());
 
     }
-
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
