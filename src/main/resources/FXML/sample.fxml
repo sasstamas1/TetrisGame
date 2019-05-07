@@ -16,7 +16,7 @@
             <children>
                 <ImageView fitHeight="625.0" fitWidth="495.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@Pictures/hatter.jpg" />
+                        <Image url="@../Pictures/hatter.jpg" />
                     </image>
                 </ImageView>
                 <Button id="button" fx:id="startgame" alignment="CENTER" layoutX="268.0" layoutY="451.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="43.0" prefWidth="148.0" text="Játék!" textFill="#ff0505" textOverrun="CENTER_WORD_ELLIPSIS">
@@ -30,12 +30,12 @@
                     </font></Button>
                 <ImageView fitHeight="167.0" fitWidth="481.0" layoutX="14.0" layoutY="197.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@Pictures/logo.png" />
+                        <Image url="@../Pictures/logo.png" />
                     </image>
                 </ImageView>
                 <ImageView fitHeight="144.0" fitWidth="440.0" layoutX="29.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@Pictures/logo1.png" />
+                        <Image url="@../Pictures/logo1.png" />
                     </image>
                 </ImageView>
             </children>

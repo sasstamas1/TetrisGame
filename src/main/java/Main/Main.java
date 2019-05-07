@@ -1,6 +1,11 @@
 package Main;
 
 import Controller.*;
+import Users.Users;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import dao.UsersDao;
+import guice.PersistenceModule;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -44,7 +49,8 @@ public class Main extends Application {
     private static Form nextObj = Controller.makeRect();
 
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sample.fxml"));
+
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("FXML/sample.fxml"));
         primaryStage.setTitle("Tetris");
         primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
@@ -110,6 +116,15 @@ public class Main extends Application {
                             over.setX(10);
                             group.getChildren().add(over);
                             game = false;
+
+                            /**
+                             * A felhasználó és a pontszám kimentése adatbázisba.
+                             */
+                            Injector injector = Guice.createInjector(new PersistenceModule("jpa-persistence-unit-1"));
+                            UsersDao usersDao = injector.getInstance(UsersDao.class);
+                            Users user = new Users(felhasznalo,pont);
+                            usersDao.persist(user);
+
                         }
                         // Exit
                         if (top == 6) {
