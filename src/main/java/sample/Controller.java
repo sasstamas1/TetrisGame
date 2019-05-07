@@ -11,15 +11,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 
-
-
 public class Controller implements Initializable {
-
 
     @FXML
     private TextField felh;
     @FXML
-    private  Pane basPane;
+    private Pane basPane;
     @FXML
     private Pane alertPane;
     @FXML
@@ -31,7 +28,7 @@ public class Controller implements Initializable {
     public static final int SIZE = Main.SIZE;
     public static int XMAX = Main.XMAX;
     public static int YMAX = Main.YMAX;
-    public static int[][] MESH = Main.MESH;
+    public static int[][] MESH = Main.HALO;
 
     @FXML
     private void handleButtonAction(ActionEvent event){
@@ -81,8 +78,7 @@ public class Controller implements Initializable {
         rangsor.setDisable(true);
         rangsor.setVisible(false);
     }
-
-
+    
     public static Form makeRect(){
         int block = (int) (Math.random() * 70);
        // int block = 11;
@@ -153,41 +149,6 @@ public class Controller implements Initializable {
         return new Form(a, b, c, d, name);
 
     }
-
-    public static void MoveRight(Form form) {
-        if (form.a.getX() + MOVE <= XMAX - SIZE && form.b.getX() + MOVE <= XMAX - SIZE
-                && form.c.getX() + MOVE <= XMAX - SIZE && form.d.getX() + MOVE <= XMAX - SIZE) {
-            int movea = MESH[((int) form.a.getX() / SIZE) + 1][((int) form.a.getY() / SIZE)];
-            int moveb = MESH[((int) form.b.getX() / SIZE) + 1][((int) form.b.getY() / SIZE)];
-            int movec = MESH[((int) form.c.getX() / SIZE) + 1][((int) form.c.getY() / SIZE)];
-            int moved = MESH[((int) form.d.getX() / SIZE) + 1][((int) form.d.getY() / SIZE)];
-            if (movea == 0 && movea == moveb && moveb == movec && movec == moved) {
-                form.a.setX(form.a.getX() + MOVE);
-                form.b.setX(form.b.getX() + MOVE);
-                form.c.setX(form.c.getX() + MOVE);
-                form.d.setX(form.d.getX() + MOVE);
-            }
-        }
-    }
-
-    public static void MoveLeft(Form form) {
-        if (form.a.getX() - MOVE >= 0 && form.b.getX() - MOVE >= 0 && form.c.getX() - MOVE >= 0
-                && form.d.getX() - MOVE >= 0) {
-            int movea = MESH[((int) form.a.getX() / SIZE) - 1][((int) form.a.getY() / SIZE)];
-            int moveb = MESH[((int) form.b.getX() / SIZE) - 1][((int) form.b.getY() / SIZE)];
-            int movec = MESH[((int) form.c.getX() / SIZE) - 1][((int) form.c.getY() / SIZE)];
-            int moved = MESH[((int) form.d.getX() / SIZE) - 1][((int) form.d.getY() / SIZE)];
-            if (movea == 0 && movea == moveb && moveb == movec && movec == moved) {
-                form.a.setX(form.a.getX() - MOVE);
-                form.b.setX(form.b.getX() - MOVE);
-                form.c.setX(form.c.getX() - MOVE);
-                form.d.setX(form.d.getX() - MOVE);
-            }
-        }
-    }
-
-
-
 
 
     @Override
