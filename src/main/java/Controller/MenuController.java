@@ -5,13 +5,10 @@ import Main.Main;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import Users.Users;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import dao.UsersDao;
 import guice.PersistenceModule;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,7 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 
-public class Controller implements Initializable {
+public class MenuController implements Initializable {
 
     @FXML
     private TextField felh;
@@ -34,14 +31,6 @@ public class Controller implements Initializable {
     @FXML
     private TableView rang;
 
-
-
-
-    public static final int MOVE = Main.MOVE;
-    public static final int SIZE = Main.SIZE;
-    public static int XMAX = Main.XMAX;
-    public static int YMAX = Main.YMAX;
-    public static int[][] MESH = Main.HALO;
 
     @FXML
     private void handleButtonAction(ActionEvent event){
@@ -104,6 +93,8 @@ public class Controller implements Initializable {
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         TableColumn score = new TableColumn("score");
         score.setCellValueFactory(new PropertyValueFactory<>("score"));
+        rang.getItems().clear();
+        rang.getColumns().clear();
 
         rang.getColumns().addAll(id,nameColumn,score);
         rang.getItems().addAll(usersDao.getTopTen());

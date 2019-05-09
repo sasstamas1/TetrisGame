@@ -3,7 +3,7 @@ package Controller;
 import javafx.scene.shape.Rectangle;
 import Main.*;
 
-public class Rotate {
+public class RotateController {
 
     public static final int MOVE = Main.MOVE;
     public static final int SIZE = Main.SIZE;
@@ -11,7 +11,7 @@ public class Rotate {
     public static int YMAX = Main.YMAX;
     public static int[][] HALO = Main.HALO;
 
-    public static void Rotate(Form form) {
+    public static void Rotate(From form) {
         int f = form.form;
         Rectangle a = form.a;
         Rectangle b = form.b;

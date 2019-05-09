@@ -19,7 +19,7 @@ public class UsersDao extends GenericJpaDao<Users> {
 
         Query query = entityManager.createQuery("Select e from Users e");
         List<Users> top10= query.getResultList();
-        return top10.stream().sorted(Comparator.comparing(Users::getScore).reversed()).collect(Collectors.toList()).subList(0, 10);
+        return top10.stream().sorted(Comparator.comparing(Users::getScore).reversed()).collect(Collectors.toList()).subList(0, 15);
     }
 
 }

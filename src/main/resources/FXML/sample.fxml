@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="625" prefWidth="481.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Controller">
+<AnchorPane prefHeight="625" prefWidth="481.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MenuController">
     <children>
         <Pane fx:id="basPane" prefHeight="608.0" prefWidth="489.0">
             <children>
@@ -61,7 +61,7 @@
                </image>
             </ImageView>
                 <Button fx:id="vissza" layoutX="215.0" layoutY="585.0" mnemonicParsing="false" onAction="#visszabutton" text="Vissza" />
-            <TableView fx:id="rang" layoutX="66.0" layoutY="62.0" prefHeight="502.0" prefWidth="376.0">
+            <TableView fx:id="rang" layoutX="66.0" layoutY="62.0" opacity="0.75" prefHeight="502.0" prefWidth="376.0">
 
             </TableView>
             </children></Pane>

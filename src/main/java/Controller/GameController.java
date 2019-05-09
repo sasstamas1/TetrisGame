@@ -7,7 +7,7 @@ import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 
-public class Control {
+public class GameController {
 
     public static final int MOVE = Main.MOVE;
     public static final int SIZE = Main.SIZE;
@@ -15,7 +15,7 @@ public class Control {
     public static int YMAX = Main.YMAX;
     public static int[][] HALO = Main.HALO;
 
-    public static void MoveRight(Form form) {
+    public static void MoveRight(From form) {
         if (form.a.getX() + MOVE <= XMAX - SIZE && form.b.getX() + MOVE <= XMAX - SIZE
                 && form.c.getX() + MOVE <= XMAX - SIZE && form.d.getX() + MOVE <= XMAX - SIZE) {
             int movea = HALO[((int) form.a.getX() / SIZE) + 1][((int) form.a.getY() / SIZE)];
@@ -31,7 +31,7 @@ public class Control {
         }
     }
 
-    public static void MoveLeft(Form form) {
+    public static void MoveLeft(From form) {
         if (form.a.getX() - MOVE >= 0 && form.b.getX() - MOVE >= 0 && form.c.getX() - MOVE >= 0
                 && form.d.getX() - MOVE >= 0) {
             int movea = HALO[((int) form.a.getX() / SIZE) - 1][((int) form.a.getY() / SIZE)];
@@ -47,8 +47,42 @@ public class Control {
         }
     }
 
+    public static void MoveDown(From form){
+        if (form.a.getY() + MOVE < YMAX && form.b.getY() + MOVE < YMAX && form.c.getY() + MOVE < YMAX
+                && form.d.getY() + MOVE < YMAX) {
+            int movea = HALO[(int) form.a.getX() / SIZE][((int) form.a.getY() / SIZE) + 1];
+            int moveb = HALO[(int) form.b.getX() / SIZE][((int) form.b.getY() / SIZE) + 1];
+            int movec = HALO[(int) form.c.getX() / SIZE][((int) form.c.getY() / SIZE) + 1];
+            int moved = HALO[(int) form.d.getX() / SIZE][((int) form.d.getY() / SIZE) + 1];
+            if (movea == 0 && movea == moveb && moveb == movec && movec == moved) {
+                form.a.setY(form.a.getY() + MOVE);
+                form.b.setY(form.b.getY() + MOVE);
+                form.c.setY(form.c.getY() + MOVE);
+                form.d.setY(form.d.getY() + MOVE);
+            }
 
-    public static Form makeRect(){
+            GameController.DeleteRows(Main.group);
+            Main.pont++;
+        }
+        if (form.a.getY() == YMAX - SIZE || form.b.getY() == YMAX - SIZE || form.c.getY() == YMAX - SIZE
+                || form.d.getY() == YMAX - SIZE || GameController.moveA(form) || GameController.moveB(form) || GameController.moveC(form) || GameController.moveD(form)) {
+            HALO[(int) form.a.getX() / SIZE][(int) form.a.getY() / SIZE] = 1;
+            HALO[(int) form.b.getX() / SIZE][(int) form.b.getY() / SIZE] = 1;
+            HALO[(int) form.c.getX() / SIZE][(int) form.c.getY() / SIZE] = 1;
+            HALO[(int) form.d.getX() / SIZE][(int) form.d.getY() / SIZE] = 1;
+            GameController.DeleteRows(Main.group);
+
+            From a = Main.nextObj;
+            Main.nextObj = GameController.makeRect();
+            Main.object = a;
+            Main.group.getChildren().addAll(a.a, a.b, a.c, a.d);
+            Main.moveOnKeyPress(a);
+            Main.pont++;
+        }
+    }
+
+
+    public static From makeRect(){
         int block = (int) (Math.random() * 70);
         // int block = 11;
         String name;
@@ -115,7 +149,7 @@ public class Control {
             d.setX(XMAX / 2 + SIZE);
             name = "i";
         }
-        return new Form(a, b, c, d, name);
+        return new From(a, b, c, d, name);
 
     }
 
@@ -185,5 +219,21 @@ public class Control {
                 }
                 rects.clear();
             } while(lines.size() > 0);
+    }
+
+    public static boolean moveA(From form) {
+        return (HALO[(int) form.a.getX() / SIZE][((int) form.a.getY() / SIZE) + 1] == 1);
+    }
+
+    public static boolean moveB(From form) {
+        return (HALO[(int) form.b.getX() / SIZE][((int) form.b.getY() / SIZE) + 1] == 1);
+    }
+
+    public static boolean moveC(From form) {
+        return (HALO[(int) form.c.getX() / SIZE][((int) form.c.getY() / SIZE) + 1] == 1);
+    }
+
+    public static boolean moveD(From form) {
+        return (HALO[(int) form.d.getX() / SIZE][((int) form.d.getY() / SIZE) + 1] == 1);
     }
 }
