@@ -1,239 +1,165 @@
 package Controller;
 
-import Main.*;
-import javafx.scene.Node;
+import Model.From;
+import Model.Game;
+import Model.Rotate;
+import Users.Users;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import dao.UsersDao;
+import guice.PersistenceModule;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import java.util.Arrays;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
-import java.util.ArrayList;
+import static Model.Game.MoveDown;
 
 public class GameController {
 
-    public static final int MOVE = Main.MOVE;
-    public static final int SIZE = Main.SIZE;
-    public static int XMAX = Main.XMAX;
-    public static int YMAX = Main.YMAX;
-    public static int[][] HALO = Main.HALO;
 
-    public static void MoveRight(From form) {
-        if (form.a.getX() + MOVE <= XMAX - SIZE && form.b.getX() + MOVE <= XMAX - SIZE
-                && form.c.getX() + MOVE <= XMAX - SIZE && form.d.getX() + MOVE <= XMAX - SIZE) {
-            int movea = HALO[((int) form.a.getX() / SIZE) + 1][((int) form.a.getY() / SIZE)];
-            int moveb = HALO[((int) form.b.getX() / SIZE) + 1][((int) form.b.getY() / SIZE)];
-            int movec = HALO[((int) form.c.getX() / SIZE) + 1][((int) form.c.getY() / SIZE)];
-            int moved = HALO[((int) form.d.getX() / SIZE) + 1][((int) form.d.getY() / SIZE)];
-            if (movea == 0 && movea == moveb && moveb == movec && movec == moved) {
-                form.a.setX(form.a.getX() + MOVE);
-                form.b.setX(form.b.getX() + MOVE);
-                form.c.setX(form.c.getX() + MOVE);
-                form.d.setX(form.d.getX() + MOVE);
+    public static boolean game = false;
+    public static final int MOVE = 25;
+    public static final int SIZE = 25;
+    public static int XMAX = SIZE * 12;
+    public static int YMAX = SIZE * 24;
+    public static int[][] HALO = new int[XMAX / SIZE][YMAX / SIZE];
+    public static Pane group = new Pane();
+    public static Scene scene = new Scene(group, XMAX + 150, YMAX);
+    public static int pont = 0;
+    public static String felhasznalo="";
+    private static int top = 0;
+
+    public static From object;
+    public static From nextObj = Game.makeRect();
+
+    public static void jatek(){
+        Stage uj = new Stage();
+        game = true;
+
+        for (int[] row : HALO) {
+            Arrays.fill(row, 0);
+        }
+
+        Line line = new Line(XMAX, 0, XMAX, YMAX);
+        Text scoretext = new Text("Pontszám:\n ");
+        scoretext.setStyle("-fx-font: 20 arial;");
+        scoretext.setY(50);
+        scoretext.setX(XMAX + 5);
+        Text nametext = new Text("Felhasználó:\n  " + felhasznalo);
+        nametext.setStyle("-fx-font: 20 arial;");
+        nametext.setY(YMAX/2);
+        nametext.setX(XMAX + 5);
+        Button kilep = new Button("Kilép");
+        kilep.setLayoutY(YMAX - 30);
+        kilep.setLayoutX(XMAX + 40);
+        kilep.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                uj.close();
+                Injector injector = Guice.createInjector(new PersistenceModule("jpa-persistence-unit-1"));
+                UsersDao usersDao = injector.getInstance(UsersDao.class);
+                Users user = new Users(felhasznalo, pont);
+                usersDao.persist(user);
             }
-        }
-    }
+        });
 
-    public static void MoveLeft(From form) {
-        if (form.a.getX() - MOVE >= 0 && form.b.getX() - MOVE >= 0 && form.c.getX() - MOVE >= 0
-                && form.d.getX() - MOVE >= 0) {
-            int movea = HALO[((int) form.a.getX() / SIZE) - 1][((int) form.a.getY() / SIZE)];
-            int moveb = HALO[((int) form.b.getX() / SIZE) - 1][((int) form.b.getY() / SIZE)];
-            int movec = HALO[((int) form.c.getX() / SIZE) - 1][((int) form.c.getY() / SIZE)];
-            int moved = HALO[((int) form.d.getX() / SIZE) - 1][((int) form.d.getY() / SIZE)];
-            if (movea == 0 && movea == moveb && moveb == movec && movec == moved) {
-                form.a.setX(form.a.getX() - MOVE);
-                form.b.setX(form.b.getX() - MOVE);
-                form.c.setX(form.c.getX() - MOVE);
-                form.d.setX(form.d.getX() - MOVE);
-            }
-        }
-    }
+        group.getChildren().addAll(scoretext,nametext,line,kilep);
 
-    public static void MoveDown(From form){
-        if (form.a.getY() + MOVE < YMAX && form.b.getY() + MOVE < YMAX && form.c.getY() + MOVE < YMAX
-                && form.d.getY() + MOVE < YMAX) {
-            int movea = HALO[(int) form.a.getX() / SIZE][((int) form.a.getY() / SIZE) + 1];
-            int moveb = HALO[(int) form.b.getX() / SIZE][((int) form.b.getY() / SIZE) + 1];
-            int movec = HALO[(int) form.c.getX() / SIZE][((int) form.c.getY() / SIZE) + 1];
-            int moved = HALO[(int) form.d.getX() / SIZE][((int) form.d.getY() / SIZE) + 1];
-            if (movea == 0 && movea == moveb && moveb == movec && movec == moved) {
-                form.a.setY(form.a.getY() + MOVE);
-                form.b.setY(form.b.getY() + MOVE);
-                form.c.setY(form.c.getY() + MOVE);
-                form.d.setY(form.d.getY() + MOVE);
-            }
+        From form = nextObj;
+        group.getChildren().addAll(form.a, form.b, form.c, form.d);
 
-            GameController.DeleteRows(Main.group);
-            Main.pont++;
-        }
-        if (form.a.getY() == YMAX - SIZE || form.b.getY() == YMAX - SIZE || form.c.getY() == YMAX - SIZE
-                || form.d.getY() == YMAX - SIZE || GameController.moveA(form) || GameController.moveB(form) || GameController.moveC(form) || GameController.moveD(form)) {
-            HALO[(int) form.a.getX() / SIZE][(int) form.a.getY() / SIZE] = 1;
-            HALO[(int) form.b.getX() / SIZE][(int) form.b.getY() / SIZE] = 1;
-            HALO[(int) form.c.getX() / SIZE][(int) form.c.getY() / SIZE] = 1;
-            HALO[(int) form.d.getX() / SIZE][(int) form.d.getY() / SIZE] = 1;
-            GameController.DeleteRows(Main.group);
+        object = form;
+        GameController.moveOnKeyPress(form);
+        nextObj = Game.makeRect();
 
-            From a = Main.nextObj;
-            Main.nextObj = GameController.makeRect();
-            Main.object = a;
-            Main.group.getChildren().addAll(a.a, a.b, a.c, a.d);
-            Main.moveOnKeyPress(a);
-            Main.pont++;
-        }
-    }
+        uj.setScene(scene);
+        uj.setTitle("TETRIS");
+        uj.show();
 
 
-    public static From makeRect(){
-        int block = (int) (Math.random() * 70);
-        // int block = 11;
-        String name;
+        Timer fall = new Timer();
+        TimerTask task = new TimerTask() {
+            public void run() {
+                Platform.runLater(new Runnable() {
+                    public void run() {
+                        if (object.a.getY() == 0 || object.b.getY() == 0 || object.c.getY() == 0
+                                || object.d.getY() == 0)
+                            top++;
+                        else
+                            top = 0;
 
-        Rectangle a = new Rectangle(SIZE-1,SIZE-1),
-                b = new Rectangle(SIZE-1,SIZE-1),
-                c = new Rectangle(SIZE-1,SIZE-1),
-                d = new Rectangle(SIZE-1,SIZE-1);
+                        if (top == 3) {
+                            // GAME OVER
+                            Text over = new Text("JÁTÉK VÉGE!");
+                            over.setFill(Color.RED);
+                            over.setStyle("-fx-font: 55 Italic;");
+                            over.setY(YMAX/2);
+                            over.setX(10);
+                            group.getChildren().add(over);
+                            game = false;
 
-
-        if (block < 10) {
-            a.setX(XMAX / 2 - SIZE);
-            b.setX(XMAX / 2 - SIZE);
-            b.setY(SIZE);
-            c.setX(XMAX / 2);
-            c.setY(SIZE);
-            d.setX(XMAX / 2 + SIZE);
-            d.setY(SIZE);
-            name = "j";
-        } else if (block < 20) {
-            a.setX(XMAX / 2 + SIZE);
-            b.setX(XMAX / 2 - SIZE);
-            b.setY(SIZE);
-            c.setX(XMAX / 2);
-            c.setY(SIZE);
-            d.setX(XMAX / 2 + SIZE);
-            d.setY(SIZE);
-            name = "l";
-        } else if (block < 30) {
-            a.setX(XMAX / 2 - SIZE);
-            b.setX(XMAX / 2);
-            c.setX(XMAX / 2 - SIZE);
-            c.setY(SIZE);
-            d.setX(XMAX / 2);
-            d.setY(SIZE);
-            name = "o";
-        } else if (block < 40) {
-            a.setX(XMAX / 2 + SIZE);
-            b.setX(XMAX / 2);
-            c.setX(XMAX / 2);
-            c.setY(SIZE);
-            d.setX(XMAX / 2 - SIZE);
-            d.setY(SIZE);
-            name = "s";
-        } else if (block < 50) {
-            a.setX(XMAX / 2 - SIZE);
-            b.setX(XMAX / 2);
-            c.setX(XMAX / 2);
-            c.setY(SIZE);
-            d.setX(XMAX / 2 + SIZE);
-            name = "t";
-        } else if (block < 60) {
-            a.setX(XMAX / 2 + SIZE);
-            b.setX(XMAX / 2);
-            c.setX(XMAX / 2 + SIZE);
-            c.setY(SIZE);
-            d.setX(XMAX / 2 + 2 * SIZE);
-            d.setY(SIZE);
-            name = "z";
-        } else {
-            a.setX(XMAX / 2 - 2 * SIZE);
-            b.setX(XMAX / 2 - SIZE);
-            c.setX(XMAX / 2);
-            d.setX(XMAX / 2 + SIZE);
-            name = "i";
-        }
-        return new From(a, b, c, d, name);
-
-    }
-
-
-    public static void DeleteRows(Pane pane){
-        ArrayList<Node> rects = new ArrayList<Node>();
-        ArrayList<Integer> lines = new ArrayList<Integer>();
-        ArrayList<Node> newrects = new ArrayList<Node>();
-        int full = 0;
-        //Finding which line is full
-        for(int i = 0; i < HALO[0].length; i++){
-            for(int j = 0; j < HALO.length; j++){
-                if(HALO[j][i] == 1)
-                    full++;
-            }
-            if(full == HALO.length)
-                lines.add(i+lines.size());
-            full = 0;
-        }
-        //Deleting rows if any is full
-        if(lines.size() > 0)
-            do{
-                for(Node node: pane.getChildren()) {
-                    if(node instanceof Rectangle)
-                        rects.add(node);
-                }
-                Main.pont += 100;
-                //Deleting the blocks on the full row
-                for(Node node: rects){
-                    Rectangle a = (Rectangle)node;
-                    if(a.getY() == lines.get(0)*SIZE){
-                        try {
-                            HALO[(int)a.getX()/SIZE][(int)a.getY()/SIZE] = 0;
-                            pane.getChildren().remove(node);
-                        } catch (ArrayIndexOutOfBoundsException e){
-                        }
-
-                    }
-                    else
-                        newrects.add(node);
-                }
-                //Added because it was causing problems when it was inside the iteration above.
-                for(Node node: newrects){
-                    Rectangle a = (Rectangle)node;
-                    if(a.getY() < lines.get(0)*SIZE){
-                        try {
-                            HALO[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 0;
-                            a.setY(a.getY() + SIZE);
-                        }catch (ArrayIndexOutOfBoundsException e){
+                            Injector injector = Guice.createInjector(new PersistenceModule("jpa-persistence-unit-1"));
+                            UsersDao usersDao = injector.getInstance(UsersDao.class);
+                            Users user = new Users(felhasznalo,pont);
+                            usersDao.persist(user);
 
                         }
+                        // Exit
+                        if (top == 6) {
+                            System.exit(0);
+                        }
+
+                        if (game) {
+                            MoveDown(object);
+                            scoretext.setText("Pontszám:\n " + Integer.toString(pont));
+                            nametext.setText("Felhasználó:\n" + felhasznalo);
+                        }
                     }
+                });
+            }
+        };
+        fall.schedule(task, 0, 300);
+
+    }
+
+
+
+
+    public static void moveOnKeyPress(From form) {
+      scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                switch (event.getCode()) {
+                    case RIGHT:
+                        Game.MoveRight(form);
+                        break;
+                    case LEFT:
+                        Game.MoveLeft(form);
+                        break;
+                    case UP:
+                        Rotate.Rotate(form);
+                    case DOWN:
+                        MoveDown(form);
+
                 }
-                lines.remove(0);
-                rects.clear();
-                newrects.clear();
-                for(Node node: pane.getChildren()) {
-                    if(node instanceof Rectangle)
-                        rects.add(node);
-                }
-                for(Node node: rects){
-                    Rectangle a = (Rectangle)node;
-                    try {
-                        HALO[(int)a.getX()/SIZE][(int)a.getY()/SIZE] = 1;
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                    }
-                }
-                rects.clear();
-            } while(lines.size() > 0);
+            }
+        });
     }
 
-    public static boolean moveA(From form) {
-        return (HALO[(int) form.a.getX() / SIZE][((int) form.a.getY() / SIZE) + 1] == 1);
-    }
 
-    public static boolean moveB(From form) {
-        return (HALO[(int) form.b.getX() / SIZE][((int) form.b.getY() / SIZE) + 1] == 1);
-    }
-
-    public static boolean moveC(From form) {
-        return (HALO[(int) form.c.getX() / SIZE][((int) form.c.getY() / SIZE) + 1] == 1);
-    }
-
-    public static boolean moveD(From form) {
-        return (HALO[(int) form.d.getX() / SIZE][((int) form.d.getY() / SIZE) + 1] == 1);
-    }
 }
+

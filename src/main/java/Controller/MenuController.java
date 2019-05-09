@@ -1,6 +1,5 @@
 package Controller;
 
-import Main.Main;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,7 +22,7 @@ public class MenuController implements Initializable {
     @FXML
     private Pane basPane;
     @FXML
-    private Pane alertPane;
+    public Pane alertPane;
     @FXML
     private Label alert;
     @FXML
@@ -35,10 +34,10 @@ public class MenuController implements Initializable {
     @FXML
     private void handleButtonAction(ActionEvent event){
         try {
-            Main.felhasznalo=felh.getText();
-            System.out.println(Main.felhasznalo);
+            GameController.felhasznalo=felh.getText();
+            System.out.println(GameController.felhasznalo);
 
-            if(Main.felhasznalo.isEmpty()){
+            if(GameController.felhasznalo.isEmpty()){
                 alertPane.setVisible(true);
                 alert.setText("Nem adtál meg nevet!");
                 basPane.setOpacity(0.3);
@@ -62,7 +61,7 @@ public class MenuController implements Initializable {
     @FXML
     private void gamestart(){
         basPane.setDisable(true);
-        Main.jatek();
+        GameController.jatek();
     }
 
     @FXML
@@ -81,7 +80,6 @@ public class MenuController implements Initializable {
         rangsor.setDisable(true);
         rangsor.setVisible(false);
     }
-
 
     @FXML
     private void Ranglista(){

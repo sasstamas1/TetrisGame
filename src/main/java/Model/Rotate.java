@@ -1,15 +1,11 @@
-package Controller;
+package Model;
 
+;
 import javafx.scene.shape.Rectangle;
-import Main.*;
 
-public class RotateController {
+import static Controller.GameController.*;
 
-    public static final int MOVE = Main.MOVE;
-    public static final int SIZE = Main.SIZE;
-    public static int XMAX = Main.XMAX;
-    public static int YMAX = Main.YMAX;
-    public static int[][] HALO = Main.HALO;
+public class Rotate {
 
     public static void Rotate(From form) {
         int f = form.form;
