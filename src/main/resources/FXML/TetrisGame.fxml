@@ -53,6 +53,23 @@
             </children>
         </Pane>
 
+        <Pane fx:id="gameoverPane" layoutX="66.0" layoutY="169.0" prefHeight="223.0" prefWidth="369.0" visible="false">
+            <children>
+                <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#cae5ff" height="226.0" layoutX="-3.0" stroke="BLACK" width="375.0" />
+                <Label fx:id="over" alignment="CENTER" layoutX="-3.0" prefHeight="75.0" prefWidth="376.0" text="Játék Vége!" textAlignment="CENTER" textFill="RED" textOverrun="CENTER_ELLIPSIS" wrapText="true">
+                    <font>
+                        <Font name="System Bold Italic" size="20.0" />
+                    </font>
+                </Label>
+                <Button fx:id="exit" layoutX="132.0" layoutY="157.0" mnemonicParsing="false" onAction="#exit" prefHeight="52.0" prefWidth="99.0" text="Kilépés" />
+            <Label layoutX="19.0" layoutY="63.0" prefHeight="67.0" prefWidth="333.0" text="Ha új játékot szeretnél, indítsd újra a játékot!" wrapText="true">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            </children>
+        </Pane>
+
         <Pane fx:id="rangsor" prefHeight="625.0" prefWidth="492.0" visible="false">
             <children>
             <ImageView fitHeight="634.0" fitWidth="509.0" pickOnBounds="true" preserveRatio="true">

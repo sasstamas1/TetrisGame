@@ -11,43 +11,48 @@ import guice.PersistenceModule;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
 import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
-import static Model.Game.MoveDown;
 
 public class GameController {
 
-
-    public static boolean game = false;
+    public static Game game;
+    public static boolean go = false;
     public static final int MOVE = 25;
     public static final int SIZE = 25;
     public static int XMAX = SIZE * 12;
     public static int YMAX = SIZE * 24;
     public static int[][] HALO = new int[XMAX / SIZE][YMAX / SIZE];
     public static Pane group = new Pane();
-    public static Scene scene = new Scene(group, XMAX + 150, YMAX);
+    private static Scene scene = new Scene(group, XMAX + 150, YMAX);;
     public static int pont = 0;
-    public static String felhasznalo="";
-    private static int top = 0;
+    public static String felhasznalo ="";
+    public static int top = 0;
 
     public static From object;
-    public static From nextObj = Game.makeRect();
+    public static From nextObj = game.makeRect();
 
+    @FXML
     public static void jatek(){
+
+        game = new Game();
+
+
         Stage uj = new Stage();
-        game = true;
+        go = true;
 
         for (int[] row : HALO) {
             Arrays.fill(row, 0);
@@ -58,22 +63,26 @@ public class GameController {
         scoretext.setStyle("-fx-font: 20 arial;");
         scoretext.setY(50);
         scoretext.setX(XMAX + 5);
-        Text nametext = new Text("Felhasználó:\n  " + felhasznalo);
+
+        Text nametext = new Text("Felhasználó:\n ");
         nametext.setStyle("-fx-font: 20 arial;");
         nametext.setY(YMAX/2);
         nametext.setX(XMAX + 5);
+
+
         Button kilep = new Button("Kilép");
         kilep.setLayoutY(YMAX - 30);
         kilep.setLayoutX(XMAX + 40);
         kilep.setOnAction(new EventHandler<ActionEvent>() {
-
             @Override
             public void handle(ActionEvent event) {
                 uj.close();
+                group.getChildren().removeAll();
                 Injector injector = Guice.createInjector(new PersistenceModule("jpa-persistence-unit-1"));
                 UsersDao usersDao = injector.getInstance(UsersDao.class);
-                Users user = new Users(felhasznalo, pont);
+                Users user = new Users(felhasznalo,pont);
                 usersDao.persist(user);
+
             }
         });
 
@@ -83,8 +92,8 @@ public class GameController {
         group.getChildren().addAll(form.a, form.b, form.c, form.d);
 
         object = form;
-        GameController.moveOnKeyPress(form);
-        nextObj = Game.makeRect();
+        moveOnKeyPress(form);
+        nextObj = game.makeRect();
 
         uj.setScene(scene);
         uj.setTitle("TETRIS");
@@ -102,29 +111,35 @@ public class GameController {
                         else
                             top = 0;
 
-                        if (top == 3) {
+                        if (top == 4) {
                             // GAME OVER
                             Text over = new Text("JÁTÉK VÉGE!");
+                            over.setLayoutX(25);
+                            over.setLayoutY(YMAX/2);
+                            over.setStyle("-fx-font: 45 arial;");
                             over.setFill(Color.RED);
-                            over.setStyle("-fx-font: 55 Italic;");
-                            over.setY(YMAX/2);
-                            over.setX(10);
                             group.getChildren().add(over);
-                            game = false;
+
 
                             Injector injector = Guice.createInjector(new PersistenceModule("jpa-persistence-unit-1"));
                             UsersDao usersDao = injector.getInstance(UsersDao.class);
                             Users user = new Users(felhasznalo,pont);
                             usersDao.persist(user);
 
-                        }
-                        // Exit
-                        if (top == 6) {
-                            System.exit(0);
+                            try {
+                                TimeUnit.SECONDS.sleep(3);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                            uj.close();
+                            group.getChildren().removeAll();
+
+
                         }
 
-                        if (game) {
-                            MoveDown(object);
+                        if (go) {
+                            game.MoveDown(object);
                             scoretext.setText("Pontszám:\n " + Integer.toString(pont));
                             nametext.setText("Felhasználó:\n" + felhasznalo);
                         }
@@ -137,23 +152,22 @@ public class GameController {
     }
 
 
-
-
     public static void moveOnKeyPress(From form) {
-      scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {
                     case RIGHT:
-                        Game.MoveRight(form);
+                        game.MoveRight(form);
                         break;
                     case LEFT:
-                        Game.MoveLeft(form);
+                        game.MoveLeft(form);
                         break;
                     case UP:
-                        Rotate.Rotate(form);
+                        Rotate rotate = new Rotate();
+                        rotate.Rotate(form);
                     case DOWN:
-                        MoveDown(form);
+                        game.MoveDown(form);
 
                 }
             }
@@ -162,4 +176,3 @@ public class GameController {
 
 
 }
-

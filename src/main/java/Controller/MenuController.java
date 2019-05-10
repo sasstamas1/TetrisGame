@@ -29,6 +29,8 @@ public class MenuController implements Initializable {
     private Pane rangsor;
     @FXML
     private TableView rang;
+    @FXML
+    private Pane gameoverPane;
 
 
     @FXML
@@ -57,11 +59,18 @@ public class MenuController implements Initializable {
         basPane.setDisable(false);
     }
 
+    @FXML
+    private void exit(ActionEvent event){
+        System.exit(0);
+    }
 
     @FXML
     private void gamestart(){
         basPane.setDisable(true);
         GameController.jatek();
+        gameoverPane.setVisible(true);
+        gameoverPane.setDisable(false);
+
     }
 
     @FXML
