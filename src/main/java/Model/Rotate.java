@@ -1,11 +1,15 @@
 package Model;
 
 ;
+import Controller.GameController;
 import javafx.scene.shape.Rectangle;
+import lombok.extern.slf4j.Slf4j;
 
-import static Controller.GameController.*;
 
+@Slf4j
 public class Rotate {
+
+    static GameController gameController = new GameController();
 
     public static void Rotate(From form) {
         int f = form.form;
@@ -289,6 +293,7 @@ public class Rotate {
 
         }
 
+        log.debug("Alakzat forgatása");
     }
 
 
@@ -296,35 +301,35 @@ public class Rotate {
         boolean xb = false;
         boolean yb = false;
         if (x >= 0)
-            xb = rect.getX() + x * MOVE <= XMAX - SIZE;
+            xb = rect.getX() + x * gameController.MOVE <= gameController.XMAX - gameController.SIZE;
         if (x < 0)
-            xb = rect.getX() + x * MOVE >= 0;
+            xb = rect.getX() + x * gameController.MOVE >= 0;
         if (y >= 0)
-            yb = rect.getY() - y * MOVE > 0;
+            yb = rect.getY() - y * gameController.MOVE > 0;
         if (y < 0)
-            yb = rect.getY() + y * MOVE < YMAX;
-        return xb && yb && HALO[((int) rect.getX() / SIZE) + x][((int) rect.getY() / SIZE) - y] == 0;
+            yb = rect.getY() + y * gameController.MOVE < gameController.YMAX;
+        return xb && yb && gameController.HALO[((int) rect.getX() / gameController.SIZE) + x][((int) rect.getY() / gameController.SIZE) - y] == 0;
     }
 
 
     private static void Jobbra(Rectangle rect){
-        if (rect.getX() + MOVE <= XMAX-SIZE)
-            rect.setX(rect.getX() + MOVE);
+        if (rect.getX() + gameController.MOVE <= gameController.XMAX-gameController.SIZE)
+            rect.setX(rect.getX() + gameController.MOVE);
     }
 
     private static void Balra(Rectangle rect){
-        if(rect.getX()-MOVE >= 0)
-            rect.setX(rect.getX()-MOVE);
+        if(rect.getX()-gameController.MOVE >= 0)
+            rect.setX(rect.getX()-gameController.MOVE);
 
     }
 
     private static void Le(Rectangle rect){
-        if (rect.getY() + MOVE < YMAX)
-            rect.setY(rect.getY() + MOVE);
+        if (rect.getY() + gameController.MOVE < gameController.YMAX)
+            rect.setY(rect.getY() + gameController.MOVE);
     }
 
     private static void Fel(Rectangle rect){
-        if(rect.getY()-MOVE > 0)
-            rect.setY(rect.getY()-MOVE);
+        if(rect.getY()-gameController.MOVE > 0)
+            rect.setY(rect.getY()-gameController.MOVE);
     }
 }

@@ -20,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
 import java.util.Timer;
@@ -27,6 +28,7 @@ import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 
+@Slf4j
 public class GameController {
 
     public static Game game;
@@ -45,8 +47,34 @@ public class GameController {
     public static From object;
     public static From nextObj = game.makeRect();
 
+    public static Game getGame() {
+        return game;
+    }
+
+    public static void setGame(Game game) {
+        GameController.game = game;
+    }
+
+    public static int getPont() {
+        return pont;
+    }
+
+    public static void setPont(int pont) {
+        GameController.pont = pont;
+    }
+
+    public static String getFelhasznalo() {
+        return felhasznalo;
+    }
+
+    public static void setFelhasznalo(String felhasznalo) {
+        GameController.felhasznalo = felhasznalo;
+    }
+
     @FXML
     public static void jatek(){
+
+        log.info("Kezd?dik a játék");
 
         game = new Game();
 
@@ -82,7 +110,9 @@ public class GameController {
                 UsersDao usersDao = injector.getInstance(UsersDao.class);
                 Users user = new Users(felhasznalo,pont);
                 usersDao.persist(user);
-
+                log.info("Kilépés a játékból");
+                log.info("Felhasználó: " + felhasznalo);
+                log.info("Pontszám: " + pont);
             }
         });
 
@@ -111,7 +141,7 @@ public class GameController {
                         else
                             top = 0;
 
-                        if (top == 4) {
+                        if (top == 5) {
                             // GAME OVER
                             Text over = new Text("JÁTÉK VÉGE!");
                             over.setLayoutX(25);
@@ -125,6 +155,10 @@ public class GameController {
                             UsersDao usersDao = injector.getInstance(UsersDao.class);
                             Users user = new Users(felhasznalo,pont);
                             usersDao.persist(user);
+
+                            log.info("Elbuktad a játékot");
+                            log.info("Felhasználó: " + felhasznalo);
+                            log.info("Pontszám: " + pont);
 
                             try {
                                 TimeUnit.SECONDS.sleep(3);
