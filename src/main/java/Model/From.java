@@ -2,7 +2,9 @@ package Model;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class From {
     public Rectangle a;
     public Rectangle b;
@@ -20,6 +22,7 @@ public class From {
     }
 
     public From(Rectangle a, Rectangle b, Rectangle c, Rectangle d, String name) {
+        log.debug("Szín beállítás");
         this.a = a;
         this.b = b;
         this.c = c;
@@ -57,13 +60,13 @@ public class From {
     }
 
 
-
     public String getName() {
         return name;
     }
 
 
     public void changeForm() {
+        log.debug("Froma váltás");
         if (form != 4) {
             form++;
         } else {
