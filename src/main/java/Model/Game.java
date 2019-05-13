@@ -15,7 +15,12 @@ public class Game {
 
     static GameController gameController = new GameController();
 
-    public static From makeRect(){
+    /**
+     * Létrehozza a random alakzatot, 4 különálló négyzet segítségével.
+     *
+     * @return Az elkészített alakzatot adja vissza, a Form osztály segítségével
+     */
+    public static Form makeRect() {
         int block = (int) (Math.random() * 70);
         // int block = 11;
         String name;
@@ -82,11 +87,16 @@ public class Game {
             d.setX(gameController.XMAX / 2 + gameController.SIZE);
             name = "i";
         }
-        return new From(a, b, c, d, name);
+        return new Form(a, b, c, d, name);
 
     }
 
-    public static void MoveRight(From form) {
+    /**
+     * Az alakzatok jobbra mozgatása.
+     *
+     * @param form - az alakzat.
+     */
+    public static void MoveRight(Form form) {
         if (form.a.getX() + gameController.MOVE <=gameController.XMAX - gameController.SIZE && form.b.getX() + gameController.MOVE <= GameController.XMAX - gameController.SIZE
                 && form.c.getX() + gameController.MOVE <= GameController.XMAX - gameController.SIZE && form.d.getX() + gameController.MOVE <= GameController.XMAX - gameController.SIZE) {
             int movea = gameController.HALO[((int) form.a.getX() / gameController.SIZE) + 1][((int) form.a.getY() / gameController.SIZE)];
@@ -104,7 +114,12 @@ public class Game {
         }
     }
 
-    public static void MoveLeft(From form) {
+    /**
+     * Az alakzatok balraa mozgatása.
+     *
+     * @param form - az alakzat.
+     */
+    public static void MoveLeft(Form form) {
         if (form.a.getX() - gameController.MOVE >= 0 && form.b.getX() - gameController.MOVE >= 0 && form.c.getX() - gameController.MOVE >= 0
                 && form.d.getX() - gameController.MOVE >= 0) {
             int movea = gameController.HALO[((int) form.a.getX() / gameController.SIZE) - 1][((int) form.a.getY() / gameController.SIZE)];
@@ -121,7 +136,12 @@ public class Game {
         }
     }
 
-    public static void MoveDown(From form){
+    /**
+     * Az alakzatok folyamatos lefelé mozgása és gyorsítása.
+     *
+     * @param form - az alakzat.
+     */
+    public static void MoveDown(Form form){
 
         if (form.a.getY() + gameController.MOVE < gameController.YMAX && form.b.getY() + gameController.MOVE < gameController.YMAX && form.c.getY() + gameController.MOVE < gameController.YMAX
                 && form.d.getY() + gameController.MOVE < gameController.YMAX) {
@@ -139,14 +159,14 @@ public class Game {
             gameController.setPont(gameController.getPont()+1);
         }
         if (form.a.getY() == gameController.YMAX - gameController.SIZE || form.b.getY() == gameController.YMAX - gameController.SIZE || form.c.getY() == gameController.YMAX - gameController.SIZE
-                || form.d.getY() == gameController.YMAX - gameController.SIZE || Game.moveA(form) || Game.moveB(form) || Game.moveC(form) || Game.moveD(form)) {
+                || form.d.getY() == gameController.YMAX - gameController.SIZE || moveA(form) || moveB(form) || moveC(form) || moveD(form)) {
             gameController.HALO[(int) form.a.getX() / gameController.SIZE][(int) form.a.getY() / gameController.SIZE] = 1;
             gameController.HALO[(int) form.b.getX() / gameController.SIZE][(int) form.b.getY() / gameController.SIZE] = 1;
             gameController.HALO[(int) form.c.getX() / gameController.SIZE][(int) form.c.getY() / gameController.SIZE] = 1;
             gameController.HALO[(int) form.d.getX() / gameController.SIZE][(int) form.d.getY() / gameController.SIZE] = 1;
             DeleteRows(gameController.group);
 
-            From a = gameController.nextObj;
+            Form a = gameController.nextObj;
             gameController.nextObj = makeRect();
             gameController.object = a;
             gameController.group.getChildren().addAll(a.a, a.b, a.c, a.d);
@@ -158,12 +178,17 @@ public class Game {
         }
     }
 
+    /**
+     * A sorok kitörlése.
+     * @param pane - az a Pane, amelyen a játék folyik.
+     */
     public static void DeleteRows(Pane pane){
         ArrayList<Node> rects = new ArrayList<Node>();
         ArrayList<Integer> lines = new ArrayList<Integer>();
         ArrayList<Node> newrects = new ArrayList<Node>();
         int full = 0;
-        //Finding which line is full
+
+        //Megkeressük azokat a sorokat, amelyek tele vannak.
         for(int i = 0; i < gameController.HALO[0].length; i++){
             for(int j = 0; j < gameController.HALO.length; j++){
                 if(gameController.HALO[j][i] == 1)
@@ -173,15 +198,19 @@ public class Game {
                 lines.add(i+lines.size());
             full = 0;
         }
-        //Deleting rows if any is full
+
+
+        //Kitöröljük azokat a sorokat, amelyek tele vannak.
         if(lines.size() > 0)
             do{
                 for(Node node: pane.getChildren()) {
                     if(node instanceof Rectangle)
                         rects.add(node);
                 }
-                gameController.pont+= 100;
-                //Deleting the blocks on the full row
+                gameController.pont += 100;
+
+
+                //Kitöröljük a blokkokat a tele sorokból
                 for(Node node: rects){
                     Rectangle a = (Rectangle)node;
                     if(a.getY() == lines.get(0)*gameController.SIZE){
@@ -192,11 +221,12 @@ public class Game {
                         }
 
 
-                    }
-                    else
+                    } else
                         newrects.add(node);
                 }
-                //Added because it was causing problems when it was inside the iteration above.
+
+
+                //Az iteráción belül problémás volt.
                 for(Node node: newrects){
                     Rectangle a = (Rectangle)node;
                     if(a.getY() < lines.get(0)*gameController.SIZE){
@@ -221,22 +251,45 @@ public class Game {
                 rects.clear();
 
                 log.info("Sor törlés");
-            } while(lines.size() > 0);
+            } while (lines.size() > 0);
     }
 
-    public static boolean moveA(From form) {
+    /**
+     * Mozoghat e lefelé az alakzatunk A része.
+     *
+     * @param form - az alakzat.
+     * @return - False ha nem mozoghat, true ha mozoghat.
+     */
+    public static boolean moveA(Form form) {
         return (gameController.HALO[(int) form.a.getX() / gameController.SIZE][((int) form.a.getY() / gameController.SIZE) + 1] == 1);
     }
 
-    public static boolean moveB(From form) {
+    /**
+     * Mozoghat e lefelé az alakzatunk B része.
+     *
+     * @param form - az alakzat.
+     * @return - False ha nem mozoghat, true ha mozoghat.
+     */
+    public static boolean moveB(Form form) {
         return (gameController.HALO[(int) form.b.getX() / gameController.SIZE][((int) form.b.getY() / gameController.SIZE) + 1] == 1);
     }
 
-    public static boolean moveC(From form) {
+    /**
+     * Mozoghat e lefelé az alakzatunk C része.
+     *
+     * @param form - az alakzat.
+     * @return - False ha nem mozoghat, true ha mozoghat.
+     */
+    public static boolean moveC(Form form) {
         return (gameController.HALO[(int) form.c.getX() / gameController.SIZE][((int) form.c.getY() / gameController.SIZE) + 1] == 1);
     }
 
-    public static boolean moveD(From form) {
+    /**
+     * Mozoghat e lefelé az alakzatunk D része.
+     * @param form - az alakzat.
+     * @return - False ha nem mozoghat, true ha mozoghat.
+     */
+    public static boolean moveD(Form form) {
         return (gameController.HALO[(int) form.d.getX() / gameController.SIZE][((int) form.d.getY() / gameController.SIZE) + 1] == 1);
     }
 }

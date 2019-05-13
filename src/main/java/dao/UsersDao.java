@@ -15,6 +15,11 @@ public class UsersDao extends GenericJpaDao<Users> {
         super(Users.class);
     }
 
+    /**
+     * Stream segítségével kiveszi az adatbázisból a top 20 játékost
+     *
+     * @return a top 20 játékost
+     */
     public List<Users> getTopTen(){
 
         Query query = entityManager.createQuery("Select e from Users e");

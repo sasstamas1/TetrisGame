@@ -33,6 +33,11 @@ public class MenuController implements Initializable {
     private Pane gameoverPane;
 
 
+    /**
+     * A start gombot kezel? függvény. Indítja a játékot és vizsgálja, hogy van e felhasználónév.
+     *
+     * @param event - a gomb lenyomása esemény.
+     */
     @FXML
     private void handleButtonAction(ActionEvent event){
         try {
@@ -51,6 +56,10 @@ public class MenuController implements Initializable {
         }
     }
 
+    /**
+     * A figyelmeztet? felület, amely jelzi ha nincs megadva felhasználónév.
+     * @param event - a gombnyomás esemény.
+     */
     @FXML
     private void handlealertButton(ActionEvent event){
         alertPane.setVisible(false);
@@ -59,11 +68,18 @@ public class MenuController implements Initializable {
         basPane.setDisable(false);
     }
 
+    /**
+     * Kilépést kezel? függvény. Bezárja az egész alkalmazást.
+     * @param event - a kilépés gomb lenyomása esemény.
+     */
     @FXML
     private void exit(ActionEvent event){
         System.exit(0);
     }
 
+    /**
+     * Játék kezdete.
+     */
     @FXML
     private void gamestart(){
         basPane.setDisable(true);
@@ -73,6 +89,10 @@ public class MenuController implements Initializable {
 
     }
 
+    /**
+     * A ranglistát kezel? függvény.
+     * @param event a ranglista gomb lenyomása.
+     */
     @FXML
     private void rangsorbutton(ActionEvent event){
         basPane.setDisable(true);
@@ -82,6 +102,10 @@ public class MenuController implements Initializable {
         Ranglista();
     }
 
+    /**
+     * A ranglistából vissza lép? gombot kezel? függvény.
+     * @param event - a ranglistán lév? vissza gomb lenyomása.
+     */
     @FXML
     private void visszabutton(ActionEvent event){
         basPane.setDisable(false);
@@ -90,6 +114,9 @@ public class MenuController implements Initializable {
         rangsor.setVisible(false);
     }
 
+    /**
+     * Az adatbázisból kiolvassa a ranglistát és létrehozza a táblázatot.
+     */
     @FXML
     private void Ranglista(){
         Injector injector = Guice.createInjector(new PersistenceModule("jpa-persistence-unit-1"));

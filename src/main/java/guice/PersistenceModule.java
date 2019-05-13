@@ -11,6 +11,9 @@ public class PersistenceModule extends AbstractModule {
         this.jpaUnit = jpaUnit;
     }
 
+    /**
+     * Beállítja a függ?ségek befecskendezését el?segít? keretrendszert.
+     */
     @Override
     protected void configure() {
         install(new JpaPersistModule(jpaUnit));

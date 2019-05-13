@@ -11,7 +11,13 @@ public class Rotate {
 
     static GameController gameController = new GameController();
 
-    public static void Rotate(From form) {
+
+    /**
+     * Az alakzatok forgatása.
+     *
+     * @param form - az alakzat.
+     */
+    public static void Rotate(Form form) {
         int f = form.form;
         Rectangle a = form.a;
         Rectangle b = form.b;
@@ -297,7 +303,15 @@ public class Rotate {
     }
 
 
-    private static boolean forgat(Rectangle rect, int x, int y) {
+    /**
+     * Forgatható e az alakzat egy része. Nem e ütközik falba, másik alakzatba.
+     *
+     * @param rect az alakzat egy része, négyzet.
+     * @param x    - x irányba mozdulás.
+     * @param y    - y irányba mozdulás.
+     * @return - teljesíthet? e a forgatás.
+     */
+    public static boolean forgat(Rectangle rect, int x, int y) {
         boolean xb = false;
         boolean yb = false;
         if (x >= 0)
@@ -312,23 +326,42 @@ public class Rotate {
     }
 
 
-    private static void Jobbra(Rectangle rect){
+    /**
+     * Adott négyzet jobbra mozdítása.
+     *
+     * @param rect - a négyzet.
+     */
+    public static void Jobbra(Rectangle rect){
         if (rect.getX() + gameController.MOVE <= gameController.XMAX-gameController.SIZE)
             rect.setX(rect.getX() + gameController.MOVE);
     }
 
-    private static void Balra(Rectangle rect){
+    /**
+     * Adott négyzet balra mozdítása.
+     *
+     * @param rect - a négyzet.
+     */
+    public static void Balra(Rectangle rect){
         if(rect.getX()-gameController.MOVE >= 0)
-            rect.setX(rect.getX()-gameController.MOVE);
-
+            rect.setX(rect.getX() - gameController.MOVE);
     }
 
-    private static void Le(Rectangle rect){
+    /**
+     * Adott négyzet lefelé mozdítása.
+     *
+     * @param rect - a négyzet.
+     */
+    public static void Le(Rectangle rect){
         if (rect.getY() + gameController.MOVE < gameController.YMAX)
             rect.setY(rect.getY() + gameController.MOVE);
     }
 
-    private static void Fel(Rectangle rect){
+    /**
+     * Adott négyzet felfelé mozdítása.
+     *
+     * @param rect - a négyzet.
+     */
+    public static void Fel(Rectangle rect){
         if(rect.getY()-gameController.MOVE > 0)
             rect.setY(rect.getY()-gameController.MOVE);
     }

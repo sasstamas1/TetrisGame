@@ -1,6 +1,6 @@
 package Controller;
 
-import Model.From;
+import Model.Form;
 import Model.Game;
 import Model.Rotate;
 import Users.Users;
@@ -44,8 +44,8 @@ public class GameController {
     public static String felhasznalo ="";
     public static int top = 0;
 
-    public static From object;
-    public static From nextObj = game.makeRect();
+    public static Form object;
+    public static Form nextObj = game.makeRect();
 
     public static Game getGame() {
         return game;
@@ -71,63 +71,22 @@ public class GameController {
         GameController.felhasznalo = felhasznalo;
     }
 
+    /**
+     * Maga a játék, minden fontos folyamat ezen belül történik.
+     */
     @FXML
     public static void jatek(){
 
-        log.info("Kezd?dik a játék");
+        log.info("Kezdodik a játék");
 
         game = new Game();
 
 
-        Stage uj = new Stage();
+        Stage jatekstage = new Stage();
         go = true;
-
-        for (int[] row : HALO) {
-            Arrays.fill(row, 0);
-        }
-
-        Line line = new Line(XMAX, 0, XMAX, YMAX);
-        Text scoretext = new Text("Pontszám:\n ");
-        scoretext.setStyle("-fx-font: 20 arial;");
-        scoretext.setY(50);
-        scoretext.setX(XMAX + 5);
-
         Text nametext = new Text("Felhasználó:\n ");
-        nametext.setStyle("-fx-font: 20 arial;");
-        nametext.setY(YMAX/2);
-        nametext.setX(XMAX + 5);
-
-
-        Button kilep = new Button("Kilép");
-        kilep.setLayoutY(YMAX - 30);
-        kilep.setLayoutX(XMAX + 40);
-        kilep.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                uj.close();
-                group.getChildren().removeAll();
-                Injector injector = Guice.createInjector(new PersistenceModule("jpa-persistence-unit-1"));
-                UsersDao usersDao = injector.getInstance(UsersDao.class);
-                Users user = new Users(felhasznalo,pont);
-                usersDao.persist(user);
-                log.info("Kilépés a játékból");
-                log.info("Felhasználó: " + felhasznalo);
-                log.info("Pontszám: " + pont);
-            }
-        });
-
-        group.getChildren().addAll(scoretext,nametext,line,kilep);
-
-        From form = nextObj;
-        group.getChildren().addAll(form.a, form.b, form.c, form.d);
-
-        object = form;
-        moveOnKeyPress(form);
-        nextObj = game.makeRect();
-
-        uj.setScene(scene);
-        uj.setTitle("TETRIS");
-        uj.show();
+        Text scoretext = new Text("Pontszám:\n ");
+        Felulet(jatekstage, scoretext, nametext);
 
 
         Timer fall = new Timer();
@@ -143,33 +102,7 @@ public class GameController {
 
                         if (top == 5) {
                             // GAME OVER
-                            Text over = new Text("JÁTÉK VÉGE!");
-                            over.setLayoutX(25);
-                            over.setLayoutY(YMAX/2);
-                            over.setStyle("-fx-font: 45 arial;");
-                            over.setFill(Color.RED);
-                            group.getChildren().add(over);
-
-
-                            Injector injector = Guice.createInjector(new PersistenceModule("jpa-persistence-unit-1"));
-                            UsersDao usersDao = injector.getInstance(UsersDao.class);
-                            Users user = new Users(felhasznalo,pont);
-                            usersDao.persist(user);
-
-                            log.info("Elbuktad a játékot");
-                            log.info("Felhasználó: " + felhasznalo);
-                            log.info("Pontszám: " + pont);
-
-                            try {
-                                TimeUnit.SECONDS.sleep(3);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-
-                            uj.close();
-                            group.getChildren().removeAll();
-
-
+                            GameOver(jatekstage);
                         }
 
                         if (go) {
@@ -185,8 +118,101 @@ public class GameController {
 
     }
 
+    /**
+     * Játék vége függvény, abban az esetben hívódik meg, ha az alakzatok elérik az ablak tetejét.
+     *
+     * @param jatekstage - a játékhoz nyitott új ablak
+     */
+    private static void GameOver(Stage jatekstage) {
+        Text over = new Text("JÁTÉK VÉGE!");
+        over.setLayoutX(25);
+        over.setLayoutY(YMAX / 2);
+        over.setStyle("-fx-font: 45 arial;");
+        over.setFill(Color.RED);
+        group.getChildren().add(over);
 
-    public static void moveOnKeyPress(From form) {
+
+        Injector injector = Guice.createInjector(new PersistenceModule("jpa-persistence-unit-1"));
+        UsersDao usersDao = injector.getInstance(UsersDao.class);
+        Users user = new Users(felhasznalo, pont);
+        usersDao.persist(user);
+
+        log.info("Elbuktad a játékot");
+        log.info("Felhasználó: " + felhasznalo);
+        log.info("Pontszám: " + pont);
+
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        jatekstage.close();
+        group.getChildren().removeAll();
+
+    }
+
+    /**
+     * Létrehozza a játék felületet, hozzá adaja a vonalat és a szükséges alakzatokat.
+     *
+     * @param jatekstage -a játékhoz nyitott új ablak
+     * @param scoretext  - a játékos pontszáma
+     * @param nametext   - a játékos felhasználóneve
+     */
+    private static void Felulet(Stage jatekstage, Text scoretext, Text nametext) {
+        for (int[] row : HALO) {
+            Arrays.fill(row, 0);
+        }
+
+        Line line = new Line(XMAX, 0, XMAX, YMAX);
+        scoretext.setStyle("-fx-font: 20 arial;");
+        scoretext.setY(50);
+        scoretext.setX(XMAX + 5);
+
+
+        nametext.setStyle("-fx-font: 20 arial;");
+        nametext.setY(YMAX / 2);
+        nametext.setX(XMAX + 5);
+
+
+        Button kilep = new Button("Kilép");
+        kilep.setLayoutY(YMAX - 30);
+        kilep.setLayoutX(XMAX + 40);
+        kilep.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                jatekstage.close();
+                group.getChildren().removeAll();
+                Injector injector = Guice.createInjector(new PersistenceModule("jpa-persistence-unit-1"));
+                UsersDao usersDao = injector.getInstance(UsersDao.class);
+                Users user = new Users(felhasznalo, pont);
+                usersDao.persist(user);
+                log.info("Kilépés a játékból");
+                log.info("Felhasználó: " + felhasznalo);
+                log.info("Pontszám: " + pont);
+            }
+        });
+
+        group.getChildren().addAll(scoretext, nametext, line, kilep);
+
+        Form form = nextObj;
+        group.getChildren().addAll(form.a, form.b, form.c, form.d);
+
+        object = form;
+        moveOnKeyPress(form);
+        nextObj = game.makeRect();
+
+        jatekstage.setScene(scene);
+        jatekstage.setTitle("TETRIS");
+        jatekstage.show();
+    }
+
+    /**
+     * A gombnyomások érzékelése, objetumok mozgatása
+     *
+     * @param form a mozgatni kívánt objektum
+     */
+    public static void moveOnKeyPress(Form form) {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
