@@ -10,37 +10,10 @@ public class Form {
     public Rectangle b;
     public Rectangle c;
     public Rectangle d;
-    Color color;
+    public Color color;
 
-    public Color getColor() {
-        return color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getForm() {
-        return form;
-    }
-
-    public void setForm(int form) {
-        this.form = form;
-    }
-
-    private String name;
+    public String name;
     public int form = 1;
-
-    public Form(Rectangle a, Rectangle b, Rectangle c, Rectangle d) {
-        this.a = a;
-        this.b = b;
-        this.c = c;
-        this.d = d;
-    }
 
 
     /**
@@ -90,21 +63,17 @@ public class Form {
         this.d.setFill(color);
     }
 
-
-    public String getName() {
-        return name;
-    }
-
-
     /**
      * Az alakzat forgatasa soran, a formak valtoztatasa
      */
-    public void changeForm() {
+    public int changeForm() {
         log.debug("Froma valtas");
         if (form != 4) {
             form++;
         } else {
             form = 1;
         }
+
+        return form;
     }
 }

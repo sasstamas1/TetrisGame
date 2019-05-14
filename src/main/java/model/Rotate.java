@@ -23,7 +23,7 @@ public class Rotate {
         Rectangle b = form.b;
         Rectangle c = form.c;
         Rectangle d = form.d;
-        switch (form.getName()){
+        switch (form.name) {
             case "j":
                 if (f == 1 && forgat(a, 1, -1) && forgat(c, -1, -1) && forgat(d, -2, -2)) {
                     Jobbra(form.a);

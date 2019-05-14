@@ -20,9 +20,8 @@ public class Game {
      *
      * @return Az elkeszitett alakzatot adja vissza, a Form osztaly segetsegevel
      */
-    public static Form makeRect(int random) {
+    public static Form makeRect(int block) {
 
-        int block = random;
         String name;
 
         Rectangle a = new Rectangle(gameController.SIZE-1,gameController.SIZE-1),

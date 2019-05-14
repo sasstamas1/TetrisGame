@@ -1,0 +1,4 @@
+/**
+ * JPA DAO
+ */
+package jpa;

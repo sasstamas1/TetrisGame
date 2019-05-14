@@ -1,0 +1,4 @@
+/**
+ * Felhasználó DAO.
+ */
+package dao;
