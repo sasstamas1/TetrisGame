@@ -1,6 +1,8 @@
 package ModelTest;
 
-import Model.Rotate;
+import model.Form;
+import model.Game;
+import model.Rotate;
 import javafx.scene.shape.Rectangle;
 import org.junit.jupiter.api.Test;
 
@@ -15,6 +17,10 @@ public class RotateTest {
         assertEquals(false, rotate.forgat(rectangle, -2, -2));
         assertEquals(false, rotate.forgat(rectangle, 1, 1));
         assertEquals(false, rotate.forgat(rectangle, -2, 2));
+    }
+
+    @Test
+    void ForgatTest2() {
         assertEquals(true, rotate.forgat(rectangle, 2, -2));
     }
 
@@ -45,5 +51,20 @@ public class RotateTest {
         rotate.Fel(rectangle);
         assertEquals(kezdet, rectangle.getY());
     }
+
+    Game game = new Game();
+    Rectangle a = new Rectangle();
+    Rectangle b = new Rectangle();
+    Rectangle c = new Rectangle();
+    Rectangle d = new Rectangle();
+    Form form = game.makeRect(2);
+
+    @Test
+    void ForgatTeszt() {
+        rotate.Rotate(form);
+        assertEquals(2, form.getForm());
+
+    }
+
 
 }

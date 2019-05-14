@@ -9,7 +9,7 @@ import javax.inject.Singleton;
 public class JpaInitializer {
 
     /**
-     * Inicializálja a persist szervert.
+     * Inicializalja a persist szervert.
      *
      * @param persistService - a persist szerver.
      */

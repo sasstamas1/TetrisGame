@@ -1,4 +1,4 @@
-package Controller;
+package controller;
 
 
 import java.net.URL;
@@ -34,9 +34,8 @@ public class MenuController implements Initializable {
 
 
     /**
-     * A start gombot kezel? függvény. Indítja a játékot és vizsgálja, hogy van e felhasználónév.
-     *
-     * @param event - a gomb lenyomása esemény.
+     * A start gombot kezelo fuggveny. Inditja a jatekot es vizsgalja, hogy van e felhasznalonev.
+     * @param event - a gomb lenyomasa esemeny.
      */
     @FXML
     private void handleButtonAction(ActionEvent event){
@@ -46,7 +45,7 @@ public class MenuController implements Initializable {
 
             if(GameController.felhasznalo.isEmpty()){
                 alertPane.setVisible(true);
-                alert.setText("Nem adtál meg nevet!");
+                alert.setText("Nem adtal meg nevet!");
                 basPane.setOpacity(0.3);
                 basPane.setDisable(true);
             }else
@@ -57,8 +56,8 @@ public class MenuController implements Initializable {
     }
 
     /**
-     * A figyelmeztet? felület, amely jelzi ha nincs megadva felhasználónév.
-     * @param event - a gombnyomás esemény.
+     * A figyelmezteto felulet, amely jelzi ha nincs megadva felhasznalonev.
+     * @param event - a gombnyomes esemeny.
      */
     @FXML
     private void handlealertButton(ActionEvent event){
@@ -69,8 +68,8 @@ public class MenuController implements Initializable {
     }
 
     /**
-     * Kilépést kezel? függvény. Bezárja az egész alkalmazást.
-     * @param event - a kilépés gomb lenyomása esemény.
+     * Kilepest kezelo fuggveny. Bezarja az egesz alkalmazast.
+     * @param event - a kilepes gomb lenyomasa esemeny.
      */
     @FXML
     private void exit(ActionEvent event){
@@ -78,7 +77,7 @@ public class MenuController implements Initializable {
     }
 
     /**
-     * Játék kezdete.
+     * Jatek kezdete.
      */
     @FXML
     private void gamestart(){
@@ -90,8 +89,8 @@ public class MenuController implements Initializable {
     }
 
     /**
-     * A ranglistát kezel? függvény.
-     * @param event a ranglista gomb lenyomása.
+     * A ranglistat kezelo fuggveny.
+     * @param event a ranglista gomb lenyomasa.
      */
     @FXML
     private void rangsorbutton(ActionEvent event){
@@ -103,8 +102,8 @@ public class MenuController implements Initializable {
     }
 
     /**
-     * A ranglistából vissza lép? gombot kezel? függvény.
-     * @param event - a ranglistán lév? vissza gomb lenyomása.
+     * A ranglistabol vissza lep gombot kezelo fuggveny.
+     * @param event - a ranglistan levo vissza gomb lenyomasa.
      */
     @FXML
     private void visszabutton(ActionEvent event){
@@ -115,7 +114,7 @@ public class MenuController implements Initializable {
     }
 
     /**
-     * Az adatbázisból kiolvassa a ranglistát és létrehozza a táblázatot.
+     * Letrehozza a tablazatot. Felotlti az adatbazisbal kiolvasott ranglistaval.
      */
     @FXML
     private void Ranglista(){

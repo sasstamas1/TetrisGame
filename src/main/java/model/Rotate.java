@@ -1,7 +1,7 @@
-package Model;
+package model;
 
 ;
-import Controller.GameController;
+import controller.GameController;
 import javafx.scene.shape.Rectangle;
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,7 +13,7 @@ public class Rotate {
 
 
     /**
-     * Az alakzatok forgatása.
+     * Az alakzatok forgatasa.
      *
      * @param form - az alakzat.
      */
@@ -299,17 +299,17 @@ public class Rotate {
 
         }
 
-        log.debug("Alakzat forgatása");
+        log.debug("Alakzat forgatasa");
     }
 
 
     /**
-     * Forgatható e az alakzat egy része. Nem e ütközik falba, másik alakzatba.
+     * Forgathato e az alakzat egy resze. Nem e utkozik falba, masik alakzatba.
      *
-     * @param rect az alakzat egy része, négyzet.
-     * @param x    - x irányba mozdulás.
-     * @param y    - y irányba mozdulás.
-     * @return - teljesíthet? e a forgatás.
+     * @param rect az alakzat egy resze, negyzet.
+     * @param x    - x iranyba mozdulas.
+     * @param y    - y iranyba mozdulas.
+     * @return - teljesitheto e a forgatas.
      */
     public static boolean forgat(Rectangle rect, int x, int y) {
         boolean xb = false;
@@ -327,9 +327,9 @@ public class Rotate {
 
 
     /**
-     * Adott négyzet jobbra mozdítása.
+     * Adott negyzet jobbra mozditasa.
      *
-     * @param rect - a négyzet.
+     * @param rect - a negyzet.
      */
     public static void Jobbra(Rectangle rect){
         if (rect.getX() + gameController.MOVE <= gameController.XMAX-gameController.SIZE)
@@ -337,9 +337,9 @@ public class Rotate {
     }
 
     /**
-     * Adott négyzet balra mozdítása.
+     * Adott negyzet balra mozditasa.
      *
-     * @param rect - a négyzet.
+     * @param rect - a negyzet.
      */
     public static void Balra(Rectangle rect){
         if(rect.getX()-gameController.MOVE >= 0)
@@ -347,9 +347,9 @@ public class Rotate {
     }
 
     /**
-     * Adott négyzet lefelé mozdítása.
+     * Adott negyzet lefele mozditasa.
      *
-     * @param rect - a négyzet.
+     * @param rect - a negyzet.
      */
     public static void Le(Rectangle rect){
         if (rect.getY() + gameController.MOVE < gameController.YMAX)
@@ -357,9 +357,9 @@ public class Rotate {
     }
 
     /**
-     * Adott négyzet felfelé mozdítása.
+     * Adott negyzet felfele mozditasa.
      *
-     * @param rect - a négyzet.
+     * @param rect - a negyzet.
      */
     public static void Fel(Rectangle rect){
         if(rect.getY()-gameController.MOVE > 0)

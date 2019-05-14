@@ -1,7 +1,7 @@
-package Model;
+package model;
 
 
-import Controller.GameController;
+import controller.GameController;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
@@ -16,13 +16,13 @@ public class Game {
     static GameController gameController = new GameController();
 
     /**
-     * Létrehozza a random alakzatot, 4 különálló négyzet segítségével.
+     * Letrehozza a random alakzatot, 4 kulonallo negyzet segetsegevel.
      *
-     * @return Az elkészített alakzatot adja vissza, a Form osztály segítségével
+     * @return Az elkeszitett alakzatot adja vissza, a Form osztaly segetsegevel
      */
-    public static Form makeRect() {
-        int block = (int) (Math.random() * 70);
-        // int block = 11;
+    public static Form makeRect(int random) {
+
+        int block = random;
         String name;
 
         Rectangle a = new Rectangle(gameController.SIZE-1,gameController.SIZE-1),
@@ -92,7 +92,7 @@ public class Game {
     }
 
     /**
-     * Az alakzatok jobbra mozgatása.
+     * Az alakzatok jobbra mozgatasa.
      *
      * @param form - az alakzat.
      */
@@ -109,13 +109,13 @@ public class Game {
                 form.c.setX(form.c.getX() + gameController.MOVE);
                 form.d.setX(form.d.getX() + gameController.MOVE);
 
-                log.debug("Jobbra mozgás");
+                log.debug("Jobbra mozgas");
             }
         }
     }
 
     /**
-     * Az alakzatok balraa mozgatása.
+     * Az alakzatok balraa mozgatasa.
      *
      * @param form - az alakzat.
      */
@@ -131,13 +131,13 @@ public class Game {
                 form.b.setX(form.b.getX() - gameController.MOVE);
                 form.c.setX(form.c.getX() - gameController.MOVE);
                 form.d.setX(form.d.getX() - gameController.MOVE);
-                log.debug("Balrara mozgás");
+                log.debug("Balrara mozgas");
             }
         }
     }
 
     /**
-     * Az alakzatok folyamatos lefelé mozgása és gyorsítása.
+     * Az alakzatok folyamatos lefele mozgasa es gyorsitasa.
      *
      * @param form - az alakzat.
      */
@@ -155,7 +155,7 @@ public class Game {
                 form.c.setY(form.c.getY() + gameController.MOVE);
                 form.d.setY(form.d.getY() + gameController.MOVE);
             }
-            log.debug("Lefelé mozgás");
+            log.debug("Lefele mozgas");
             gameController.setPont(gameController.getPont()+1);
         }
         if (form.a.getY() == gameController.YMAX - gameController.SIZE || form.b.getY() == gameController.YMAX - gameController.SIZE || form.c.getY() == gameController.YMAX - gameController.SIZE
@@ -167,20 +167,20 @@ public class Game {
             DeleteRows(gameController.group);
 
             Form a = gameController.nextObj;
-            gameController.nextObj = makeRect();
+            gameController.nextObj = makeRect(gameController.makeRandom());
             gameController.object = a;
             gameController.group.getChildren().addAll(a.a, a.b, a.c, a.d);
             gameController.moveOnKeyPress(a);
             gameController.setPont(gameController.getPont()+1);
 
 
-            log.debug("Gyorsabb mozgás lefelé");
+            log.debug("Gyorsabb mozgas lefela");
         }
     }
 
     /**
-     * A sorok kitörlése.
-     * @param pane - az a Pane, amelyen a játék folyik.
+     * A sorok kitorlese.
+     * @param pane - az a Pane, amelyen a jatek folyik.
      */
     public static void DeleteRows(Pane pane){
         ArrayList<Node> rects = new ArrayList<Node>();
@@ -188,7 +188,7 @@ public class Game {
         ArrayList<Node> newrects = new ArrayList<Node>();
         int full = 0;
 
-        //Megkeressük azokat a sorokat, amelyek tele vannak.
+        //Megkeressï¿½k azokat a sorokat, amelyek tele vannak.
         for(int i = 0; i < gameController.HALO[0].length; i++){
             for(int j = 0; j < gameController.HALO.length; j++){
                 if(gameController.HALO[j][i] == 1)
@@ -200,7 +200,7 @@ public class Game {
         }
 
 
-        //Kitöröljük azokat a sorokat, amelyek tele vannak.
+        //Kitï¿½rï¿½ljï¿½k azokat a sorokat, amelyek tele vannak.
         if(lines.size() > 0)
             do{
                 for(Node node: pane.getChildren()) {
@@ -210,7 +210,7 @@ public class Game {
                 gameController.pont += 100;
 
 
-                //Kitöröljük a blokkokat a tele sorokból
+                //Kitï¿½rï¿½ljï¿½k a blokkokat a tele sorokbï¿½l
                 for(Node node: rects){
                     Rectangle a = (Rectangle)node;
                     if(a.getY() == lines.get(0)*gameController.SIZE){
@@ -226,7 +226,7 @@ public class Game {
                 }
 
 
-                //Az iteráción belül problémás volt.
+                //Az iterï¿½ciï¿½n belï¿½l problï¿½mï¿½s volt.
                 for(Node node: newrects){
                     Rectangle a = (Rectangle)node;
                     if(a.getY() < lines.get(0)*gameController.SIZE){
@@ -250,12 +250,12 @@ public class Game {
                 }
                 rects.clear();
 
-                log.info("Sor törlés");
+                log.info("Sor torles");
             } while (lines.size() > 0);
     }
 
     /**
-     * Mozoghat e lefelé az alakzatunk A része.
+     * Mozoghat e lefele az alakzatunk A resze.
      *
      * @param form - az alakzat.
      * @return - False ha nem mozoghat, true ha mozoghat.
@@ -265,7 +265,7 @@ public class Game {
     }
 
     /**
-     * Mozoghat e lefelé az alakzatunk B része.
+     * Mozoghat e lefele az alakzatunk B resze.
      *
      * @param form - az alakzat.
      * @return - False ha nem mozoghat, true ha mozoghat.
@@ -275,7 +275,7 @@ public class Game {
     }
 
     /**
-     * Mozoghat e lefelé az alakzatunk C része.
+     * Mozoghat e lefele az alakzatunk C resze.
      *
      * @param form - az alakzat.
      * @return - False ha nem mozoghat, true ha mozoghat.
@@ -285,7 +285,7 @@ public class Game {
     }
 
     /**
-     * Mozoghat e lefelé az alakzatunk D része.
+     * Mozoghat e lefele az alakzatunk D resze.
      * @param form - az alakzat.
      * @return - False ha nem mozoghat, true ha mozoghat.
      */

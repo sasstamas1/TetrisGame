@@ -1,6 +1,6 @@
 package dao;
 
-import Users.Users;
+import users.Users;
 import jpa.GenericJpaDao;
 
 
@@ -16,9 +16,9 @@ public class UsersDao extends GenericJpaDao<Users> {
     }
 
     /**
-     * Stream segítségével kiveszi az adatbázisból a top 20 játékost
+     * Egy stream segitsegevel kiveszi az adatbazisbol a top 20 jatekost
      *
-     * @return a top 20 játékost
+     * @return a top 20 jatekost
      */
     public List<Users> getTopTen(){
 

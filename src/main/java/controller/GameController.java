@@ -1,9 +1,9 @@
-package Controller;
+package controller;
 
-import Model.Form;
-import Model.Game;
-import Model.Rotate;
-import Users.Users;
+import model.Form;
+import model.Game;
+import model.Rotate;
+import users.Users;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import dao.UsersDao;
@@ -45,7 +45,7 @@ public class GameController {
     public static int top = 0;
 
     public static Form object;
-    public static Form nextObj = game.makeRect();
+    public static Form nextObj = game.makeRect(makeRandom());
 
     public static Game getGame() {
         return game;
@@ -72,20 +72,20 @@ public class GameController {
     }
 
     /**
-     * Maga a játék, minden fontos folyamat ezen belül történik.
+     * Maga a jatek, minden fontos folyamat ezen belol tortonik.
      */
     @FXML
     public static void jatek(){
 
-        log.info("Kezdodik a játék");
+        log.info("Kezdodik a jatek");
 
         game = new Game();
 
 
         Stage jatekstage = new Stage();
         go = true;
-        Text nametext = new Text("Felhasználó:\n ");
-        Text scoretext = new Text("Pontszám:\n ");
+        Text nametext = new Text("Felhasznalo:\n ");
+        Text scoretext = new Text("Pontszam:\n ");
         Felulet(jatekstage, scoretext, nametext);
 
 
@@ -107,8 +107,8 @@ public class GameController {
 
                         if (go) {
                             game.MoveDown(object);
-                            scoretext.setText("Pontszám:\n " + Integer.toString(pont));
-                            nametext.setText("Felhasználó:\n" + felhasznalo);
+                            scoretext.setText("Pontszam:\n " + Integer.toString(pont));
+                            nametext.setText("Felhasznalo:\n" + felhasznalo);
                         }
                     }
                 });
@@ -119,12 +119,12 @@ public class GameController {
     }
 
     /**
-     * Játék vége függvény, abban az esetben hívódik meg, ha az alakzatok elérik az ablak tetejét.
+     * Jatek vege fuggveny, abban az esetben hivodik meg, ha az alakzatok elerik az ablak tetejet.
      *
-     * @param jatekstage - a játékhoz nyitott új ablak
+     * @param jatekstage - a jatekhoz nyitott uj ablak
      */
     private static void GameOver(Stage jatekstage) {
-        Text over = new Text("JÁTÉK VÉGE!");
+        Text over = new Text("JATEK VEGE!");
         over.setLayoutX(25);
         over.setLayoutY(YMAX / 2);
         over.setStyle("-fx-font: 45 arial;");
@@ -137,9 +137,9 @@ public class GameController {
         Users user = new Users(felhasznalo, pont);
         usersDao.persist(user);
 
-        log.info("Elbuktad a játékot");
-        log.info("Felhasználó: " + felhasznalo);
-        log.info("Pontszám: " + pont);
+        log.info("Elbuktad a jatekot");
+        log.info("Felhasznalo: " + felhasznalo);
+        log.info("Pontszam: " + pont);
 
         try {
             TimeUnit.SECONDS.sleep(3);
@@ -153,11 +153,11 @@ public class GameController {
     }
 
     /**
-     * Létrehozza a játék felületet, hozzá adaja a vonalat és a szükséges alakzatokat.
+     * Letrehozza a jatek feluletet, hozza adaja a vonalat es a szukseges alakzatokat.
      *
-     * @param jatekstage -a játékhoz nyitott új ablak
-     * @param scoretext  - a játékos pontszáma
-     * @param nametext   - a játékos felhasználóneve
+     * @param jatekstage -a jatekhoz nyitott uj ablak
+     * @param scoretext  - a jatekos pontszama
+     * @param nametext   - a jatekos felhasznaloneve
      */
     private static void Felulet(Stage jatekstage, Text scoretext, Text nametext) {
         for (int[] row : HALO) {
@@ -175,7 +175,7 @@ public class GameController {
         nametext.setX(XMAX + 5);
 
 
-        Button kilep = new Button("Kilép");
+        Button kilep = new Button("Kilï¿½p");
         kilep.setLayoutY(YMAX - 30);
         kilep.setLayoutX(XMAX + 40);
         kilep.setOnAction(new EventHandler<ActionEvent>() {
@@ -187,9 +187,9 @@ public class GameController {
                 UsersDao usersDao = injector.getInstance(UsersDao.class);
                 Users user = new Users(felhasznalo, pont);
                 usersDao.persist(user);
-                log.info("Kilépés a játékból");
-                log.info("Felhasználó: " + felhasznalo);
-                log.info("Pontszám: " + pont);
+                log.info("Kilepes a jatekbol");
+                log.info("Felhasznolo: " + felhasznalo);
+                log.info("Pontszam: " + pont);
             }
         });
 
@@ -200,7 +200,7 @@ public class GameController {
 
         object = form;
         moveOnKeyPress(form);
-        nextObj = game.makeRect();
+        nextObj = game.makeRect(makeRandom());
 
         jatekstage.setScene(scene);
         jatekstage.setTitle("TETRIS");
@@ -208,9 +208,9 @@ public class GameController {
     }
 
     /**
-     * A gombnyomások érzékelése, objetumok mozgatása
+     * A gombnyomasok erzekelese, objetumok mozgatesa
      *
-     * @param form a mozgatni kívánt objektum
+     * @param form a mozgatni kivant objektum
      */
     public static void moveOnKeyPress(Form form) {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -232,6 +232,10 @@ public class GameController {
                 }
             }
         });
+    }
+
+    public static int makeRandom() {
+        return (int) (Math.random() * 70);
     }
 
 

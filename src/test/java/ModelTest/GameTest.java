@@ -1,7 +1,8 @@
 package ModelTest;
 
-import Model.Form;
-import Model.Game;
+import controller.GameController;
+import model.Form;
+import model.Game;
 import javafx.scene.shape.Rectangle;
 import org.junit.jupiter.api.Test;
 
@@ -13,8 +14,9 @@ public class GameTest {
     public Rectangle b;
     public Rectangle c;
     public Rectangle d;
+    GameController gameController = new GameController();
     Game game = new Game();
-    Form form = game.makeRect();
+    Form form = game.makeRect(gameController.makeRandom());
 
     @Test
     void MoveRightTest() {

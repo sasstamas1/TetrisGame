@@ -12,7 +12,7 @@ public class PersistenceModule extends AbstractModule {
     }
 
     /**
-     * Beállítja a függ?ségek befecskendezését el?segít? keretrendszert.
+     * Beallitja a fuggosegek befecskendezeset elosegito keretrendszert.
      */
     @Override
     protected void configure() {

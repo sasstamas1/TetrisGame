@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -44,16 +44,16 @@ public class Form {
 
 
     /**
-     * Az adott 4 négyzet színét állítja be az alakzat formájának megfelel?en.
+     * Az adott 4 negyzet szinet allitja be az alakzat formajanak megfeleloen.
      *
-     * @param a    alakzat 1. része
-     * @param b    alakzat 2. része
-     * @param c    alakzat 3. része
-     * @param d    alakzat 4. része
+     * @param a    alakzat 1. resze
+     * @param b    alakzat 2. resze
+     * @param c    alakzat 3. resze
+     * @param d    alakzat 4. resze
      * @param name az alakzat neve
      */
     public Form(Rectangle a, Rectangle b, Rectangle c, Rectangle d, String name) {
-        log.debug("Szín beállítás");
+        log.debug("Szin beallitas");
         this.a = a;
         this.b = b;
         this.c = c;
@@ -97,10 +97,10 @@ public class Form {
 
 
     /**
-     * Az alakzat forgatása során, a formák változtatása
+     * Az alakzat forgatasa soran, a formak valtoztatasa
      */
     public void changeForm() {
-        log.debug("Froma váltás");
+        log.debug("Froma valtas");
         if (form != 4) {
             form++;
         } else {
