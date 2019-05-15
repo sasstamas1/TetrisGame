@@ -261,7 +261,7 @@ public class Game {
      * Mozoghat e lefele az alakzatunk A resze.
      *
      * @param form - az alakzat.
-     * @return - False ha nem mozoghat, true ha mozoghat.
+     * @return - False ha nincs alatta semmi, true ha van alatta valami.
      */
     public static boolean moveA(Form form) {
         return (gameController.HALO[(int) form.a.getX() / gameController.SIZE][((int) form.a.getY() / gameController.SIZE) + 1] == 1);
@@ -271,7 +271,7 @@ public class Game {
      * Mozoghat e lefele az alakzatunk B resze.
      *
      * @param form - az alakzat.
-     * @return - False ha nem mozoghat, true ha mozoghat.
+     * @return - False ha nincs alatta semmi, true ha van alatta valami.
      */
     public static boolean moveB(Form form) {
         return (gameController.HALO[(int) form.b.getX() / gameController.SIZE][((int) form.b.getY() / gameController.SIZE) + 1] == 1);

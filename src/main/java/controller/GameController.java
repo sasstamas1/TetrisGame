@@ -130,7 +130,7 @@ public class GameController {
      * @param jatekstage - a jatekhoz nyitott uj ablak
      */
     private static void GameOver(Stage jatekstage) {
-        Text over = new Text("JATEK VEGE!");
+        Text over = new Text("Játék Vége!");
         over.setLayoutX(25);
         over.setLayoutY(YMAX / 2);
         over.setStyle("-fx-font: 45 arial;");
@@ -181,7 +181,7 @@ public class GameController {
         nametext.setX(XMAX + 5);
 
 
-        Button kilep = new Button("Kil�p");
+        Button kilep = new Button("Kilép");
         kilep.setLayoutY(YMAX - 30);
         kilep.setLayoutX(XMAX + 40);
         kilep.setOnAction(new EventHandler<ActionEvent>() {

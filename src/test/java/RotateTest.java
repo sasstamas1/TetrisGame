@@ -3,6 +3,8 @@ import model.Form;
 import model.Rotate;
 import org.junit.jupiter.api.Test;
 
+import java.util.Objects;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RotateTest {
@@ -12,6 +14,85 @@ public class RotateTest {
     Rectangle b = new Rectangle();
     Rectangle c = new Rectangle();
     Rectangle d = new Rectangle();
+
+
+    @Test
+    void ForgatTest() {
+        Rotate rotate = new Rotate();
+        assertFalse(rotate.forgat(a, 1, 1));
+        assertTrue(rotate.forgat(a, 1, -1));
+    }
+
+
+    @Test
+    void JobbraTest() {
+        double kezdet = a.getX();
+        Rotate rotate = new Rotate();
+        rotate.Jobbra(a);
+        assertEquals(kezdet + 25, a.getX());
+
+        a.setX(25 * 12);
+        kezdet = a.getX();
+        rotate.Jobbra(a);
+        assertEquals(kezdet, a.getX());
+
+    }
+
+
+    @Test
+    void BalraTest() {
+        double kezdet = a.getX();
+        Rotate rotate = new Rotate();
+        rotate.Balra(a);
+        assertEquals(kezdet, a.getX());
+
+        a.setX(50);
+        kezdet = a.getX();
+        rotate.Balra(a);
+        assertEquals(kezdet - 25, a.getX());
+    }
+
+    @Test
+    void LeTest() {
+        double kezdet = a.getY();
+        Rotate rotate = new Rotate();
+        rotate.Le(a);
+        assertEquals(kezdet + 25, a.getY());
+
+        a.setY(25 * 24);
+        kezdet = a.getY();
+        rotate.Le(a);
+        assertEquals(kezdet, a.getY());
+    }
+
+    @Test
+    void FelTest() {
+        double kezdet = a.getY();
+        Rotate rotate = new Rotate();
+        rotate.Fel(a);
+        assertEquals(kezdet, a.getY());
+
+        a.setY(50);
+        kezdet = a.getY();
+        rotate.Fel(a);
+        assertEquals(kezdet - 25, a.getY());
+    }
+
+
+    boolean egyenlo(Form form, Form form1) {
+        if (form.a.getX() == form1.a.getX() && form.a.getY() == form1.a.getY())
+            if (form.b.getX() == form1.b.getX() && form.b.getY() == form1.b.getY())
+                if (form.c.getX() == form1.c.getX() && form.c.getY() == form1.c.getY())
+                    if (form.d.getX() == form1.d.getX() && form.d.getY() == form1.d.getY())
+                        if (form.form == form1.form)
+                            return true;
+
+
+        return false;
+
+
+    }
+
 
     @Test
     void RotateTest1() {
@@ -398,60 +479,5 @@ public class RotateTest {
         }
         assertTrue(egyenlo(form, form1));
     }
-
-
-    @Test
-    void ForgatTest() {
-        Rotate rotate = new Rotate();
-        assertFalse(rotate.forgat(a, 1, 1));
-    }
-
-
-    @Test
-    void JobbraTest() {
-        double kezdet = a.getX();
-        Rotate rotate = new Rotate();
-        rotate.Jobbra(a);
-        assertEquals(kezdet + 25, a.getX());
-    }
-
-
-    @Test
-    void BalraTest() {
-        double kezdet = a.getX();
-        Rotate rotate = new Rotate();
-        rotate.Balra(a);
-        assertEquals(kezdet, a.getX());
-    }
-
-    @Test
-    void LeTest() {
-        double kezdet = a.getY();
-        Rotate rotate = new Rotate();
-        rotate.Le(a);
-        assertEquals(kezdet + 25, a.getY());
-    }
-
-    @Test
-    void FelTest() {
-        double kezdet = a.getY();
-        Rotate rotate = new Rotate();
-        rotate.Fel(a);
-        assertEquals(kezdet, a.getY());
-    }
-
-
-    boolean egyenlo(Form form, Form form1) {
-        if (form.a.getX() == form1.a.getX() && form.a.getY() == form1.a.getY())
-            if (form.b.getX() == form1.b.getX() && form.b.getY() == form1.b.getY())
-                if (form.c.getX() == form1.c.getX() && form.c.getY() == form1.c.getY())
-                    if (form.d.getX() == form1.d.getX() && form.d.getY() == form1.d.getY())
-                        if (form.name == form1.name)
-                            return true;
-
-
-        return false;
-
-
-    }
 }
+
