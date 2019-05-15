@@ -1,4 +1,4 @@
 /**
- * JPA
+ * JPA.
  */
 package guice;

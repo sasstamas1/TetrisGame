@@ -71,16 +71,15 @@ public class Form {
     }
 
     /**
-     * Az alakzat forgatasa soran, a formak valtoztatasa
+     * Az alakzat forgatasa soran, a formak valtoztatasa.
+     *
      */
-    public int changeForm() {
+    public void changeForm() {
         log.debug("Froma valtas");
         if (form != 4) {
             form++;
         } else {
             form = 1;
         }
-
-        return form;
     }
 }

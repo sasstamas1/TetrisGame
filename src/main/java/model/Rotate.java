@@ -5,7 +5,9 @@ import controller.GameController;
 import javafx.scene.shape.Rectangle;
 import lombok.extern.slf4j.Slf4j;
 
-
+/**
+ * A forgatáshoz szükséges osztály.
+ */
 @Slf4j
 public class Rotate {
 

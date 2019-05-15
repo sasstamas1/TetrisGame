@@ -27,35 +27,37 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
-
+/**
+ * A játék irányítása.
+ */
 @Slf4j
 public class GameController {
 
     public static Game game;
     public static boolean go = false;
     /**
-     * mozgas nagysaga
+     * mozgas nagysaga.
      */
     public static final int MOVE = 25;
     /**
-     * a blokkok merete
+     * a blokkok merete.
      */
     public static final int SIZE = 25;
     /**
-     * a jatekter szelessege
+     * a jatekter szelessege.
      */
     public static int XMAX = SIZE * 12;
     /**
-     * a jatekter magassaga
+     * a jatekter magassaga.
      */
     public static int YMAX = SIZE * 24;
     /**
-     * a jatekterhez tartozo 2 dimenzios matrix. 12*24
+     * a jatekterhez tartozo 2 dimenzios matrix. 12*24.
      */
     public static int[][] HALO = new int[XMAX / SIZE][YMAX / SIZE];
     public static Pane group = new Pane();
     /**
-     * a jatekablaka, jatekter + oldalsav
+     * a jatekablaka, jatekter + oldalsav.
      */
     private static Scene scene = new Scene(group, XMAX + 150, YMAX);;
     public static int pont = 0;
@@ -68,11 +70,19 @@ public class GameController {
      */
     public static Form nextObj = game.makeRect(makeRandom());
 
-
+    /**
+     * Pontszám lekérése.
+     *
+     * @return pontszám.
+     */
     public static int getPont() {
         return pont;
     }
 
+    /**
+     * pontszám beállítása.
+     * @param pont pontszám.
+     */
     public static void setPont(int pont) {
         GameController.pont = pont;
     }
@@ -127,7 +137,7 @@ public class GameController {
     /**
      * Jatek vege fuggveny, abban az esetben hivodik meg, ha az alakzatok elerik az ablak tetejet.
      *
-     * @param jatekstage - a jatekhoz nyitott uj ablak
+     * @param jatekstage - a jatekhoz nyitott uj ablak.
      */
     private static void GameOver(Stage jatekstage) {
         Text over = new Text("Játék Vége!");
@@ -161,9 +171,9 @@ public class GameController {
     /**
      * Letrehozza a jatek feluletet, hozza adaja a vonalat es a szukseges alakzatokat.
      *
-     * @param jatekstage -a jatekhoz nyitott uj ablak
-     * @param scoretext  - a jatekos pontszama
-     * @param nametext   - a jatekos felhasznaloneve
+     * @param jatekstage -a jatekhoz nyitott uj ablak.
+     * @param scoretext  - a jatekos pontszama.
+     * @param nametext   - a jatekos felhasznaloneve.
      */
     private static void Felulet(Stage jatekstage, Text scoretext, Text nametext) {
         for (int[] row : HALO) {
@@ -214,9 +224,9 @@ public class GameController {
     }
 
     /**
-     * A gombnyomasok erzekelese, objetumok mozgatesa
+     * A gombnyomasok erzekelese, objetumok mozgatesa.
      *
-     * @param form a mozgatni kivant objektum
+     * @param form a mozgatni kivant objektum.
      */
     public static void moveOnKeyPress(Form form) {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -243,7 +253,7 @@ public class GameController {
     /**
      * Random szam generalasa 0-70 között.
      *
-     * @return a random szam
+     * @return a random szam.
      */
     public static int makeRandom() {
         return (int) (Math.random() * 70);

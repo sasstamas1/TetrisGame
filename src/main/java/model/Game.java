@@ -9,20 +9,22 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 
-
+/**
+ * A játék irányításához szükséges függvények.
+ */
 @Slf4j
 public class Game {
 
 
     /**
-     * A jatekiranyitas letrehozasa, peldanyositasa {@code GameController()}
+     * A jatekiranyitas letrehozasa, peldanyositasa {@code GameController()}.
      */
     static GameController gameController = new GameController();
 
     /**
      * Letrehozza a random alakzatot, 4 kulonallo negyzet segetsegevel.
-     *
-     * @return Az elkeszitett alakzatot adja vissza, a Form osztaly segetsegevel
+     * @param block - random szám.
+     * @return Az elkeszitett alakzatot adja vissza, a Form osztaly segetsegevel.
      */
     public static Form makeRect(int block) {
 

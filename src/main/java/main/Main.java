@@ -7,10 +7,20 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 
+
+/**
+ * Az alkalmazás Main class-a.
+ */
 @Slf4j
 public class Main extends Application {
 
 
+    /**
+     * Az alkalmazás kezdete.
+     *
+     * @param primaryStage - a főmenü ablaka.
+     * @throws Exception - kivételek.
+     */
     public void start(Stage primaryStage) throws Exception {
 
         log.info("Indul a program");
@@ -22,7 +32,10 @@ public class Main extends Application {
 
     }
 
-
+    /**
+     * main függvény.
+     * @param args semmit.
+     */
     public static void main(String[] args) {
 
         launch(args);

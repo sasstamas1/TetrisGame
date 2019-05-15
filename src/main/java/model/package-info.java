@@ -1,4 +1,4 @@
 /**
- * A játék mechanikája irányitása
+ * A játék mechanikája irányitása.
  */
 package model;
