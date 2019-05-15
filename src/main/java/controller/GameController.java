@@ -33,27 +33,41 @@ public class GameController {
 
     public static Game game;
     public static boolean go = false;
+    /**
+     * mozgas nagysaga
+     */
     public static final int MOVE = 25;
+    /**
+     * a blokkok merete
+     */
     public static final int SIZE = 25;
+    /**
+     * a jatekter szelessege
+     */
     public static int XMAX = SIZE * 12;
+    /**
+     * a jatekter magassaga
+     */
     public static int YMAX = SIZE * 24;
+    /**
+     * a jatekterhez tartozo 2 dimenzios matrix. 12*24
+     */
     public static int[][] HALO = new int[XMAX / SIZE][YMAX / SIZE];
     public static Pane group = new Pane();
+    /**
+     * a jatekablaka, jatekter + oldalsav
+     */
     private static Scene scene = new Scene(group, XMAX + 150, YMAX);;
     public static int pont = 0;
     public static String felhasznalo ="";
     public static int top = 0;
 
     public static Form object;
+    /**
+     * a kovetkezo alakzat letrehozasa, {@code makeRandom()} fuggveny segitsegevel.
+     */
     public static Form nextObj = game.makeRect(makeRandom());
 
-    public static Game getGame() {
-        return game;
-    }
-
-    public static void setGame(Game game) {
-        GameController.game = game;
-    }
 
     public static int getPont() {
         return pont;
@@ -61,14 +75,6 @@ public class GameController {
 
     public static void setPont(int pont) {
         GameController.pont = pont;
-    }
-
-    public static String getFelhasznalo() {
-        return felhasznalo;
-    }
-
-    public static void setFelhasznalo(String felhasznalo) {
-        GameController.felhasznalo = felhasznalo;
     }
 
     /**
@@ -234,6 +240,11 @@ public class GameController {
         });
     }
 
+    /**
+     * Random szam generalasa 0-70 között.
+     *
+     * @return a random szam
+     */
     public static int makeRandom() {
         return (int) (Math.random() * 70);
     }

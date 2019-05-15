@@ -13,6 +13,10 @@ import java.util.ArrayList;
 @Slf4j
 public class Game {
 
+
+    /**
+     * A jatekiranyitas letrehozasa, peldanyositasa {@code GameController()}
+     */
     static GameController gameController = new GameController();
 
     /**
@@ -187,7 +191,7 @@ public class Game {
         ArrayList<Node> newrects = new ArrayList<Node>();
         int full = 0;
 
-        //Megkeress�k azokat a sorokat, amelyek tele vannak.
+        //Megkeressuk azokat a sorokat, amelyek tele vannak.
         for(int i = 0; i < gameController.HALO[0].length; i++){
             for(int j = 0; j < gameController.HALO.length; j++){
                 if(gameController.HALO[j][i] == 1)
@@ -199,7 +203,7 @@ public class Game {
         }
 
 
-        //Kit�r�lj�k azokat a sorokat, amelyek tele vannak.
+        //Kitoroljuk azokat a sorokat, amelyek tele vannak.
         if(lines.size() > 0)
             do{
                 for(Node node: pane.getChildren()) {
@@ -209,7 +213,7 @@ public class Game {
                 gameController.pont += 100;
 
 
-                //Kit�r�lj�k a blokkokat a tele sorokb�l
+                //Kitoroljuk a blokkokat a tele sorokbol
                 for(Node node: rects){
                     Rectangle a = (Rectangle)node;
                     if(a.getY() == lines.get(0)*gameController.SIZE){
@@ -225,7 +229,7 @@ public class Game {
                 }
 
 
-                //Az iter�ci�n bel�l probl�m�s volt.
+                //az iteración belül problémás volt.
                 for(Node node: newrects){
                     Rectangle a = (Rectangle)node;
                     if(a.getY() < lines.get(0)*gameController.SIZE){

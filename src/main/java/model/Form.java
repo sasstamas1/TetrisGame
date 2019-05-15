@@ -4,6 +4,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Az alakzathoz tartozo szin es forma beallitasa.
+ * Minden alakzat 4 elembol all, kis negyzetek.
+ * 1. {@code Rectangel a}
+ * 2. {@code Rectangel b}
+ * 3. {@code Rectangel c}
+ * 4. {@code Rectangel d}
+ */
 @Slf4j
 public class Form {
     public Rectangle a;
@@ -11,7 +19,6 @@ public class Form {
     public Rectangle c;
     public Rectangle d;
     public Color color;
-
     public String name;
     public int form = 1;
 

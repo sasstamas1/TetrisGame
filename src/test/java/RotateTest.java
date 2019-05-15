@@ -415,6 +415,7 @@ public class RotateTest {
         assertEquals(kezdet + 25, a.getX());
     }
 
+
     @Test
     void BalraTest() {
         double kezdet = a.getX();
